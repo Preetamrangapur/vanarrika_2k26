@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Admin Dashboard — CampusVibe</title>
+  <meta name="description" content="Admin panel for managing events, teachers, and students">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0a0a1a">
+</head>
+<body>
+
+  <div class="container page">
+    <div class="top-bar">
+      <div class="top-bar__greeting">
+        <p class="text-sm">Admin Panel</p>
+        <h2>🛠 Dashboard</h2>
+      </div>
+      <div class="top-bar__actions">
+        <a href="teacher-management.html" class="btn btn-outline btn-sm">👨‍🏫 Teachers</a>
+        <button class="btn btn-outline btn-sm" onclick="openFaqManagement()">❓ FAQ</button>
+        <button class="btn btn-outline btn-sm" onclick="openNoticeManagement()">📢 Notices</button>
+        <button class="btn btn-primary btn-sm" id="createEventBtn" onclick="openCreateEvent()">+ Event</button>
+      </div>
+    </div>
+
+    <!-- Immediate Notices -->
+    <div id="noticeSection"></div>
+
+    <!-- Stats -->
+    <div class="stats-grid" id="statsGrid"></div>
+
+    <!-- Teacher Approval Requests -->
+    <div id="approvalSection"></div>
+
+    <!-- Event List -->
+    <div class="section-title"><span>All Events</span></div>
+    <div class="data-list" id="eventList"></div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

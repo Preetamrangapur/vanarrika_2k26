@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Login — CampusVibe</title>
+  <meta name="description" content="Login to CampusVibe — your college event management platform">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0a0a1a">
+</head>
+<body class="no-navbar">
+
+  <div class="login-page">
+    <div class="login-card glass-card">
+      <div class="login-card__logo">🎪</div>
+      <h1>CampusVibe</h1>
+      <p class="subtitle">College Event Management Platform</p>
+
+      <div id="loginError" class="login-card__error"></div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" class="form-input" placeholder="you@college.edu" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" class="form-input" placeholder="Enter your password" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="loginBtn">Continue</button>
+      </form>
+
+      <div class="login-card__divider">or</div>
+
+      <button class="btn btn-ghost btn-block" onclick="loginAsGuest()">Continue as Guest</button>
+
+      <p class="login-card__footer">
+        Don't have an account? <a href="register.html">Register</a>
+      </p>
+
+      <div style="margin-top: 24px; padding: 16px; background: rgba(255,255,255,0.04); border-radius: 12px; text-align: left;">
+        <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;">Demo Accounts</p>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8;">
+          <strong style="color: var(--accent);">Admin:</strong> admin@college.edu / admin123<br>
+          <strong style="color: #00C9A7;">Teacher:</strong> priya@college.edu / teacher123<br>
+          <strong style="color: #6C63FF;">Student:</strong> ananya@college.edu / student123
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // Redirect if already logged in
+    if (isLoggedIn()) {
+      window.location.href = 'index.html';
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const errEl = document.getElementById('loginError');
+
+      const result = login(email, password);
+      if (result.success) {
+        window.location.href = 'index.html';
+      } else {
+        errEl.textContent = result.message;
+        errEl.style.display = 'block';
+        document.getElementById('loginBtn').classList.add('animate-pulse');
+        setTimeout(() => document.getElementById('loginBtn').classList.remove('animate-pulse'), 600);
+      }
+    });
+
+    function showRegisterInfo() {
+      alert('Registration is handled by the Admin. Please contact your college administrator to get an account.');
+    }
+  </script>
+</body>
+</html>

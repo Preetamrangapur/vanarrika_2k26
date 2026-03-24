@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Student Dashboard — CampusVibe</title>
+  <meta name="description" content="Browse events, register, and manage your event registrations">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0a0a1a">
+</head>
+<body>
+
+  <div class="container page">
+    <div class="top-bar">
+      <div class="top-bar__greeting">
+        <p class="text-sm">Student Dashboard</p>
+        <h2 id="studentName">🎓 My Events</h2>
+      </div>
+    </div>
+
+    <!-- Immediate Notices -->
+    <div id="noticeSection"></div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" data-tab="browse" onclick="switchTab('browse')">Browse Events</button>
+      <button class="tab" data-tab="mine" onclick="switchTab('mine')">⭐ Favorite Events</button>
+    </div>
+
+    <!-- Search -->
+    <div class="search-bar" id="searchBarWrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input class="form-input" id="searchInput" placeholder="Search events..." oninput="renderBrowse()">
+    </div>
+
+    <div id="browseTab">
+      <div class="data-list" id="browseList"></div>
+    </div>
+
+    <div id="mineTab" class="hidden">
+      <div class="data-list" id="myEventsList"></div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/student.js"></script>
+</body>
+</html>
