@@ -1,51 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student Dashboard — CampusVibe</title>
-  <meta name="description" content="Browse events, register, and manage your event registrations">
-  <link rel="stylesheet" href="styles/main.css">
+  <meta name="description" content="Browse events, register, and manage your favorites">
+  <link rel="stylesheet" href="styles/dashboard.css">
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0a0a1a">
+  <meta name="theme-color" content="#0B0D1A">
 </head>
 <body>
-
-  <div class="container page">
-    <div class="top-bar">
-      <div class="top-bar__greeting">
-        <p class="text-sm">Student Dashboard</p>
-        <h2 id="studentName">🎓 My Events</h2>
+<div class="dashboard student-layout">
+  <div class="sidebar-overlay" onclick="closeSidebar()"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__logo"><div class="sidebar__logo-icon">🎪</div><span class="sidebar__logo-text">CampusVibe</span></div>
+    <nav class="sidebar__nav">
+      <div class="sidebar__section-label">Menu</div>
+      <button class="sidebar__item active" data-section="sec-home" onclick="switchStudentSection('sec-home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</button>
+      <button class="sidebar__item" data-section="sec-favorites" onclick="switchStudentSection('sec-favorites')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Favorites</button>
+      <button class="sidebar__item" data-section="sec-maps" onclick="switchStudentSection('sec-maps')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Maps</button>
+      <button class="sidebar__item" data-section="sec-gallery" onclick="switchStudentSection('sec-gallery')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Gallery</button>
+      <button class="sidebar__item" data-section="sec-profile" onclick="switchStudentSection('sec-profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</button>
+    </nav>
+  </aside>
+  <div class="main-area">
+    <header class="navbar">
+      <div class="navbar__left">
+        <button class="navbar__hamburger" onclick="toggleSidebar()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        <div class="navbar__search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Search events..." id="searchInput" oninput="renderHome()"></div>
       </div>
-    </div>
-
-    <!-- Immediate Notices -->
-    <div id="noticeSection"></div>
-
-    <!-- Tabs -->
-    <div class="tabs">
-      <button class="tab active" data-tab="browse" onclick="switchTab('browse')">Browse Events</button>
-      <button class="tab" data-tab="mine" onclick="switchTab('mine')">⭐ Favorite Events</button>
-    </div>
-
-    <!-- Search -->
-    <div class="search-bar" id="searchBarWrap">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input class="form-input" id="searchInput" placeholder="Search events..." oninput="renderBrowse()">
-    </div>
-
-    <div id="browseTab">
-      <div class="data-list" id="browseList"></div>
-    </div>
-
-    <div id="mineTab" class="hidden">
-      <div class="data-list" id="myEventsList"></div>
-    </div>
+      <div class="navbar__right">
+        <button class="navbar__btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle theme"></button>
+        <div class="navbar__profile" style="position:relative">
+          <div class="navbar__avatar" onclick="toggleProfileDropdown()" id="navAvatar">S</div>
+          <div class="profile-dropdown" id="profileDropdown">
+            <div class="profile-dropdown__item" style="flex-direction:column;align-items:flex-start;gap:2px;cursor:default"><strong id="ddName" style="color:var(--text-primary)">Student</strong><span style="font-size:.75rem;color:var(--text-muted)" id="ddEmail">student@college.edu</span></div>
+            <div class="profile-dropdown__divider"></div>
+            <button class="profile-dropdown__item profile-dropdown__item--danger" onclick="logout()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign Out</button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="content">
+      <!-- HOME -->
+      <div class="section-content active" id="sec-home">
+        <div class="welcome"><p class="welcome__greeting" id="studentGreeting">Welcome back 👋</p><h1 class="welcome__title">Welcome back, <span>Student</span> 👋</h1></div>
+        <div id="featuredSliderContainer" class="mb-20"></div>
+        <div id="noticesBannerHome" class="mb-20"></div>
+        <div class="section-title">🔥 Upcoming Events</div>
+        <div class="scroll-row mb-20" id="upcomingScroll"></div>
+        <div class="section-title">✅ Completed Events</div>
+        <div class="scroll-row" id="completedScroll"></div>
+      </div>
+      <!-- FAVORITES -->
+      <div class="section-content" id="sec-favorites"><div class="welcome"><h1 class="welcome__title">❤️ <span>Favorites</span></h1></div><div class="panel"><div class="panel__body" id="favoritesContainer"></div></div></div>
+      <!-- MAPS -->
+      <div class="section-content" id="sec-maps"><div class="welcome"><h1 class="welcome__title">📍 <span>Maps & Venues</span></h1></div><div id="mapsContainer"></div></div>
+      <!-- GALLERY -->
+      <div class="section-content" id="sec-gallery"><div class="welcome"><h1 class="welcome__title">📸 <span>Gallery</span></h1></div><div id="galleryContainer"></div></div>
+      <!-- PROFILE -->
+      <div class="section-content" id="sec-profile"><div class="panel"><div class="panel__header"><div class="panel__title">👤 My Profile</div></div><div class="panel__body" id="profileContainer"></div></div></div>
+    </main>
   </div>
-
-  <script src="js/data.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/nav.js"></script>
-  <script src="js/student.js"></script>
+  <nav class="student-bottom-nav">
+    <button class="student-bottom-nav__item active" data-section="sec-home" onclick="switchStudentSection('sec-home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></button>
+    <button class="student-bottom-nav__item" data-section="sec-maps" onclick="switchStudentSection('sec-maps')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Maps</span></button>
+    <button class="student-bottom-nav__item" data-section="sec-gallery" onclick="switchStudentSection('sec-gallery')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Gallery</span></button>
+    <button class="student-bottom-nav__item" data-section="sec-favorites" onclick="switchStudentSection('sec-favorites')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>Favorites</span></button>
+    <button class="student-bottom-nav__item" data-section="sec-profile" onclick="switchStudentSection('sec-profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></button>
+  </nav>
+</div>
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/dashboard-nav.js"></script>
+<script src="js/student.js"></script>
 </body>
 </html>

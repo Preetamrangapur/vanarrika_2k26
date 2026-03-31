@@ -4,80 +4,180 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Login — CampusVibe</title>
-  <meta name="description" content="Login to CampusVibe — your college event management platform">
-  <link rel="stylesheet" href="styles/main.css">
+  <meta name="description" content="Sign in to CampusVibe — your college event management platform">
+  <link rel="stylesheet" href="styles/login.css">
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0a0a1a">
+  <meta name="theme-color" content="#050510">
 </head>
-<body class="no-navbar">
+<body>
 
-  <div class="login-page">
-    <div class="login-card glass-card">
+  <!-- ========== Animated Background ========== -->
+  <div class="login-bg" aria-hidden="true">
+    <div class="orb orb--1"></div>
+    <div class="orb orb--2"></div>
+    <div class="orb orb--3"></div>
+  </div>
+
+  <!-- ========== Dark/Light Toggle ========== -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+    <span class="theme-toggle__icon">🌙</span>
+    <span class="theme-toggle__label">Dark</span>
+  </button>
+
+  <!-- ========== Toast Container ========== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ========== Login Wrapper ========== -->
+  <div class="login-wrapper">
+    <div class="login-card">
+
+      <!-- Logo & Title -->
       <div class="login-card__logo">🎪</div>
-      <h1>CampusVibe</h1>
-      <p class="subtitle">College Event Management Platform</p>
+      <h1 class="login-card__title">CampusVibe</h1>
+      <p class="login-card__subtitle">College Event Management Platform</p>
 
-      <div id="loginError" class="login-card__error"></div>
+      <!-- Login Form -->
+      <form id="loginForm" novalidate>
 
-      <form id="loginForm">
+        <!-- Email Field -->
         <div class="form-group">
-          <label for="email">Email Address</label>
-          <input type="email" id="email" class="form-input" placeholder="you@college.edu" required autocomplete="email">
+          <!-- Mail icon -->
+          <svg class="form-group__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+            <path d="M22 4l-10 8L2 4"></path>
+          </svg>
+          <input
+            type="email"
+            id="email"
+            class="form-input"
+            placeholder="Email"
+            autocomplete="email"
+          >
+          <label for="email" class="floating-label">Email Address</label>
         </div>
+
+        <!-- Password Field -->
         <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" class="form-input" placeholder="Enter your password" required autocomplete="current-password">
+          <!-- Lock icon -->
+          <svg class="form-group__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <input
+            type="password"
+            id="password"
+            class="form-input"
+            placeholder="Password"
+            autocomplete="current-password"
+            style="padding-right: 48px;"
+          >
+          <label for="password" class="floating-label">Password</label>
+          <!-- Show/Hide toggle -->
+          <button type="button" class="password-toggle" id="passwordToggle" aria-label="Show password">
+            <!-- Eye icon -->
+            <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <!-- Eye-off icon -->
+            <svg class="icon-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"></path>
+              <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"></path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+              <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"></path>
+            </svg>
+          </button>
         </div>
-        <button type="submit" class="btn btn-primary btn-block" id="loginBtn">Continue</button>
+
+        <!-- Remember Me + Forgot Password -->
+        <div class="form-row">
+          <label class="checkbox-group">
+            <input type="checkbox" id="rememberMe">
+            <span>Remember me</span>
+          </label>
+          <a href="#" class="forgot-link" id="forgotLink">Forgot password?</a>
+        </div>
+
+        <!-- Sign In Button -->
+        <button type="submit" class="btn btn-primary" id="loginBtn">
+          <span class="btn-text">Sign In</span>
+          <span class="spinner"></span>
+        </button>
       </form>
 
-      <div class="login-card__divider">or</div>
-
-      <button class="btn btn-ghost btn-block" onclick="loginAsGuest()">Continue as Guest</button>
-
-      <p class="login-card__footer">
+      <!-- Register Link -->
+      <p class="login-footer">
         Don't have an account? <a href="register.html">Register</a>
       </p>
 
-      <div style="margin-top: 24px; padding: 16px; background: rgba(255,255,255,0.04); border-radius: 12px; text-align: left;">
-        <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;">Demo Accounts</p>
-        <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8;">
-          <strong style="color: var(--accent);">Admin:</strong> admin@college.edu / admin123<br>
-          <strong style="color: #00C9A7;">Teacher:</strong> priya@college.edu / teacher123<br>
-          <strong style="color: #6C63FF;">Student:</strong> ananya@college.edu / student123
-        </p>
+      <!-- Demo Credentials -->
+      <div class="demo-box">
+        <p class="demo-box__title">Demo Accounts</p>
+        <div class="demo-box__row">
+          <span class="demo-box__role demo-box__role--admin">Admin:</span>
+          admin@college.edu / admin123
+        </div>
+        <div class="demo-box__row">
+          <span class="demo-box__role demo-box__role--teacher">Teacher:</span>
+          priya@college.edu / teacher123
+        </div>
+        <div class="demo-box__row">
+          <span class="demo-box__role demo-box__role--student">Student:</span>
+          ananya@college.edu / student123
+        </div>
       </div>
+
+    </div><!-- .login-card -->
+  </div><!-- .login-wrapper -->
+
+  <!-- ========== Forgot Password Modal ========== -->
+  <div class="modal-overlay" id="forgotModal">
+    <div class="modal">
+      <h2 class="modal__title">Reset Password</h2>
+      <p class="modal__text">Enter your registered email and set a new password.</p>
+
+      <form id="resetForm" novalidate>
+        <!-- Reset Email -->
+        <div class="form-group">
+          <svg class="form-group__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+            <path d="M22 4l-10 8L2 4"></path>
+          </svg>
+          <input type="email" id="resetEmail" class="form-input" placeholder="Email" autocomplete="email">
+          <label for="resetEmail" class="floating-label">Registered Email</label>
+        </div>
+        <!-- New Password -->
+        <div class="form-group">
+          <svg class="form-group__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <input type="password" id="newPassword" class="form-input" placeholder="New Password">
+          <label for="newPassword" class="floating-label">New Password</label>
+        </div>
+        <!-- Confirm Password -->
+        <div class="form-group">
+          <svg class="form-group__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm Password">
+          <label for="confirmPassword" class="floating-label">Confirm Password</label>
+        </div>
+        <button type="submit" class="btn btn-primary" id="resetBtn">
+          <span class="btn-text">Reset Password</span>
+          <span class="spinner"></span>
+        </button>
+      </form>
+
+      <button class="btn btn-ghost modal__cancel" id="closeModal" style="margin-top:12px;">Cancel</button>
     </div>
   </div>
 
+  <!-- ========== Scripts ========== -->
   <script src="js/data.js"></script>
   <script src="js/auth.js"></script>
-  <script>
-    // Redirect if already logged in
-    if (isLoggedIn()) {
-      window.location.href = 'index.html';
-    }
+  <script src="js/login.js"></script>
 
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      const errEl = document.getElementById('loginError');
-
-      const result = login(email, password);
-      if (result.success) {
-        window.location.href = 'index.html';
-      } else {
-        errEl.textContent = result.message;
-        errEl.style.display = 'block';
-        document.getElementById('loginBtn').classList.add('animate-pulse');
-        setTimeout(() => document.getElementById('loginBtn').classList.remove('animate-pulse'), 600);
-      }
-    });
-
-    function showRegisterInfo() {
-      alert('Registration is handled by the Admin. Please contact your college administrator to get an account.');
-    }
-  </script>
 </body>
 </html>

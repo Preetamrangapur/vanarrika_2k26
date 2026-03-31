@@ -37,17 +37,6 @@ function isLoggedIn() {
   return getCurrentUser() !== null;
 }
 
-function isGuest() {
-  const user = getCurrentUser();
-  return user && user.role === 'guest';
-}
-
-function loginAsGuest() {
-  const guest = { id: 'guest', name: 'Guest User', email: 'guest@college.edu', role: 'guest', avatar: '' };
-  localStorage.setItem('cem_session', JSON.stringify(guest));
-  window.location.href = 'index.html';
-}
-
 function requireAuth(allowedRoles) {
   const user = getCurrentUser();
   if (!user) {
@@ -67,7 +56,7 @@ function redirectToDashboard(role) {
     case 'admin':   window.location.href = 'admin.html';   break;
     case 'teacher': window.location.href = 'teacher.html'; break;
     case 'student': window.location.href = 'student.html'; break;
-    default:        window.location.href = 'index.html';   break;
+    default:        window.location.href = 'student.html'; break;
   }
 }
 
