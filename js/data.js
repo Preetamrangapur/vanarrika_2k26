@@ -270,24 +270,5 @@ function isFavorite(userId, eventId) {
   return getFavorites(userId).includes(eventId);
 }
 
-// ---- FAQ (admin-editable) ----
-const DEFAULT_FAQS = [
-  { id: 'fq1', question: 'How do I register for an event?', answer: 'Students can click the Register Event button on any event card or event details page. This will open the official registration link (Google Form / external URL) provided by the admin.' },
-  { id: 'fq2', question: 'How can I see my favorite events?', answer: 'Students can mark events using the ⭐ favorite icon on event cards. Favorited events will appear in the Favorite Events tab on the Student Dashboard.' },
-  { id: 'fq3', question: 'Who should I contact for event issues?', answer: 'Students can contact the assigned teacher or student coordinators listed in the event details page. Their name, phone number, and department are displayed.' },
-  { id: 'fq4', question: 'What happens if I miss an event?', answer: 'After 6:00 PM on the event day, the event will automatically be marked as Completed. You will no longer be able to register for it.' },
-  { id: 'fq5', question: 'What are the different user roles?', answer: 'Admin: Full control — create, edit, delete events, assign teachers, manage FAQs.\nTeacher: Manage assigned events — edit details, view student sheets.\nStudent: Browse events, register via external links, mark favorites.' },
-  { id: 'fq6', question: 'How do I find event venues?', answer: 'Visit the Venues page from the bottom navigation (Maps tab). You\'ll find all campus venues with building information and capacity details.' },
-  { id: 'fq7', question: 'About CampusVibe', answer: 'CampusVibe is a modern college event management platform designed to streamline event discovery, registration, and management for students, teachers, and administrators.' }
-];
-
-function getFaqs() {
-  if (!localStorage.getItem('cem_faqs')) {
-    localStorage.setItem('cem_faqs', JSON.stringify(DEFAULT_FAQS));
-  }
-  return JSON.parse(localStorage.getItem('cem_faqs'));
-}
-function saveFaqs(faqs) { localStorage.setItem('cem_faqs', JSON.stringify(faqs)); }
-
 // Initialize data on load
 seedData();

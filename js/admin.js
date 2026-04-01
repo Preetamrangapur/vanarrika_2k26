@@ -336,52 +336,6 @@
     render();
   };
 
-  // ===== FAQ MANAGEMENT =====
-  window.openFaqManagement = function () {
-    const faqs = getFaqs();
-    showModal('❓ FAQ Management', `
-      <div style="margin-bottom:16px"><button class="btn btn-primary btn-sm" onclick="openAddFaq()">+ Add FAQ</button></div>
-      <div class="data-list">${faqs.length ? faqs.map(faq => `
-        <div class="data-item">
-          <div class="data-item__header">
-            <div class="data-item__title" style="font-size:.9rem">${faq.question}</div>
-            <div class="data-item__actions">
-              <button class="btn btn-ghost btn-sm" onclick="openEditFaq('${faq.id}')">✏️</button>
-              <button class="btn btn-danger btn-sm" onclick="deleteFaq('${faq.id}')">🗑️</button>
-            </div>
-          </div>
-          <div class="data-item__meta">${faq.answer.substring(0, 80)}${faq.answer.length > 80 ? '...' : ''}</div>
-        </div>`).join('') : '<p class="text-xs text-muted">No FAQs yet</p>'}</div>
-    `);
-  };
-  window.openAddFaq = function () {
-    showModal('Add FAQ', `<form id="addFaqForm"><div class="form-group"><label>Question</label><input class="form-input" id="faqQuestion" required></div><div class="form-group"><label>Answer</label><textarea class="form-input form-textarea" id="faqAnswer" required></textarea></div><button type="submit" class="btn btn-primary btn-block mt-12">💾 Add</button></form>`);
-    document.getElementById('addFaqForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const faqs = getFaqs();
-      faqs.push({ id: 'fq' + Date.now().toString(36), question: document.getElementById('faqQuestion').value.trim(), answer: document.getElementById('faqAnswer').value.trim() });
-      saveFaqs(faqs); closeModal(); showToast('FAQ added! ✅');
-      setTimeout(() => openFaqManagement(), 350);
-    });
-  };
-  window.openEditFaq = function (id) {
-    const faq = getFaqs().find(f => f.id === id);
-    if (!faq) return;
-    showModal('Edit FAQ', `<form id="editFaqForm"><div class="form-group"><label>Question</label><input class="form-input" id="faqQuestion" value="${faq.question}" required></div><div class="form-group"><label>Answer</label><textarea class="form-input form-textarea" id="faqAnswer" required>${faq.answer}</textarea></div><button type="submit" class="btn btn-primary btn-block mt-12">💾 Save</button></form>`);
-    document.getElementById('editFaqForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const faqs = getFaqs(); const idx = faqs.findIndex(f => f.id === id); if (idx === -1) return;
-      faqs[idx].question = document.getElementById('faqQuestion').value.trim();
-      faqs[idx].answer = document.getElementById('faqAnswer').value.trim();
-      saveFaqs(faqs); closeModal(); showToast('FAQ updated! ✅');
-      setTimeout(() => openFaqManagement(), 350);
-    });
-  };
-  window.deleteFaq = function (id) {
-    if (!confirm('Delete FAQ?')) return;
-    saveFaqs(getFaqs().filter(f => f.id !== id)); showToast('FAQ deleted', 'info'); openFaqManagement();
-  };
-
   // ===== NOTICE MANAGEMENT =====
   window.openAddNotice = function () {
     const now = new Date();

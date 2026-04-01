@@ -8,13 +8,23 @@
   const user = getCurrentUser();
   const ev = getEventById(eventId);
 
+  function goToDashboard() {
+    if (user && user.role) {
+      redirectToDashboard(user.role);
+    } else {
+      window.location.href = 'login.html';
+    }
+  }
+
+  window.goToDashboard = goToDashboard;
+
   if (!ev) {
     document.getElementById('eventContent').innerHTML = `
       <div class="container page">
         <div class="empty-state" style="padding-top: 100px;">
           <div class="empty-state__icon">😕</div>
           <p class="empty-state__text">Event not found</p>
-          <a href="index.html" class="btn btn-primary mt-20">Go Home</a>
+          <button onclick="goToDashboard()" class="btn btn-primary mt-20">Go Home</button>
         </div>
       </div>
     `;
@@ -79,7 +89,7 @@
     <div class="event-detail__hero">
       <img src="${ev.image}" alt="${ev.title}" onerror="this.outerHTML='<div class=\\'img-placeholder\\' style=\\'height:240px\\'>🎪</div>'">
       <div class="event-detail__hero-overlay"></div>
-      <a href="index.html" class="event-detail__back btn btn-icon btn-ghost">
+      <a href="javascript:void(0)" onclick="goToDashboard()" class="event-detail__back btn btn-icon btn-ghost">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
       </a>
     </div>
@@ -166,5 +176,6 @@
     showToast('You will be notified about this event! 🔔', 'info');
   };
 
+  window.goToDashboard = goToDashboard;
   injectBottomNav('');
 })();

@@ -2,7 +2,7 @@
 // Service Worker — CampusVibe PWA
 // ============================================================
 
-const CACHE_NAME = 'campusvibe-v1';
+const CACHE_NAME = 'campusvibe-v3-responsive';
 const ASSETS = [
   '/',
   '/index.html',
@@ -11,21 +11,19 @@ const ASSETS = [
   '/teacher.html',
   '/student.html',
   '/event.html',
-  '/venues.html',
-  '/profile.html',
-  '/faq.html',
+  '/register.html',
   '/styles/main.css',
+  '/styles/dashboard.css',
+  '/styles/login.css',
   '/js/data.js',
   '/js/auth.js',
   '/js/nav.js',
-  '/js/home.js',
   '/js/admin.js',
   '/js/teacher.js',
   '/js/student.js',
   '/js/event-detail.js',
-  '/js/venues.js',
-  '/js/profile.js',
-  '/js/faq.js',
+  '/js/login.js',
+  '/js/dashboard-nav.js',
 ];
 
 self.addEventListener('install', event => {
@@ -46,6 +44,14 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(cached => cached || fetch(event.request))
+    fetch(event.request)
+      .then(response => {
+        const responseClone = response.clone();
+        caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, responseClone);
+        });
+        return response;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
