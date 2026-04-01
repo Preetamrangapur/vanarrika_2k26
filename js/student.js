@@ -45,8 +45,8 @@
     // Upcoming & Completed scroll rows (same as admin)
     const upcoming = events.filter(e => getEventStatus(e.date) === 'upcoming');
     const completed = events.filter(e => getEventStatus(e.date) === 'completed');
-    renderScrollEvents('upcomingScroll', upcoming, 'switchStudentSection');
-    renderScrollEvents('completedScroll', completed, 'switchStudentSection');
+    renderScrollEvents('upcomingScroll', upcoming, 'openStudentEventDetail');
+    renderScrollEvents('completedScroll', completed, 'openStudentEventDetail');
 
     // Notices banner
     const notices = getNotices().sort((a, b) => new Date(b.date) - new Date(a.date));

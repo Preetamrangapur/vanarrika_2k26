@@ -256,8 +256,9 @@ function renderScrollEvents(containerId, events, onClickFn) {
   const el = document.getElementById(containerId);
   if (!el) return;
   if (!events.length) { el.innerHTML = '<p class="text-sm text-muted" style="padding:8px">No events</p>'; return; }
+  const handler = onClickFn || 'openEventDetailModal';
   el.innerHTML = events.map(ev => `
-    <div class="scroll-card" onclick="openEventDetailModal('${ev.id}')">
+    <div class="scroll-card" onclick="${handler}('${ev.id}')">
       <img src="${ev.image}" alt="${ev.title}" class="scroll-card__img" onerror="this.outerHTML='<div class=\\'scroll-card__img featured-slide__placeholder\\'>🎪</div>'">
       <div class="scroll-card__body">
         <div class="scroll-card__title">${ev.title}</div>
