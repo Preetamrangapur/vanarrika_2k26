@@ -27,8 +27,8 @@
     const allEventsForHome = getEvents();
     const upcoming = allEventsForHome.filter(e => getEventStatus(e.date) === 'upcoming');
     const completed = allEventsForHome.filter(e => getEventStatus(e.date) === 'completed');
-    renderScrollEvents('upcomingScroll', upcoming, 'switchSection');
-    renderScrollEvents('completedScroll', completed, 'switchSection');
+    renderScrollEvents('upcomingScroll', upcoming, 'openEventModal');
+    renderScrollEvents('completedScroll', completed, 'openEventModal');
     // Notices banner
     const notices = getNotices();
     const nb = document.getElementById('noticesBannerHome');
@@ -44,7 +44,7 @@
         const teacherNames = teacherEmails.map(email => { const t = allUsers.find(u => u.email === email && u.role === 'teacher'); return t ? t.name : email; });
         const coordCount = (ev.coordinators || []).length;
         return `
-          <div class="event-card" onclick="openEventDetail('${ev.id}')">
+          <div class="event-card" onclick="openEventModal('${ev.id}')" title="View full details">
             <div class="event-card__body">
               <div class="event-card__title">${ev.title}</div>
               <div class="event-card__meta">
@@ -87,7 +87,7 @@
     const el = document.getElementById(containerId);
     if (!events.length) { el.innerHTML = '<div class="empty-state"><div class="empty-state__icon">📭</div><p class="empty-state__text">No events assigned</p></div>'; return; }
     el.innerHTML = events.map(ev => `
-      <div class="data-item" style="cursor:pointer" onclick="openEventDetail('${ev.id}')">
+      <div class="data-item" style="cursor:pointer" onclick="openEventModal('${ev.id}')" title="View full details">
         <div class="data-item__header">
           <div class="data-item__title">${ev.title}</div>
           <div class="data-item__actions">
@@ -124,33 +124,7 @@
     }).join('');
   }
 
-  // ---- Event Detail ----
-  window.openEventDetail = function (id) {
-    const ev = getEventById(id);
-    if (!ev || !isTeacherAssigned(ev, user.email)) return;
-    const allUsers = getUsers();
-    const teacherEmails = getEventTeachers(ev);
-    const teacherNames = teacherEmails.map(email => { const t = allUsers.find(u => u.email === email && u.role === 'teacher'); return t ? t.name : email; });
-    const coords = ev.coordinators || [];
-    showModal(ev.title, `
-      <div class="mb-12">${getStatusBadge(getEventStatus(ev.date))}</div>
-      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
-        <div class="flex items-center gap-8 text-sm"><span>📍 ${ev.venue}</span></div>
-        <div class="flex items-center gap-8 text-sm"><span>🏢 ${ev.floor || 'N/A'}</span></div>
-        <div class="flex items-center gap-8 text-sm"><span>📅 ${formatDate(ev.date)} · ${ev.time}</span></div>
-        <div class="flex items-center gap-8 text-sm"><span>👨‍🏫 ${teacherNames.join(', ')}</span></div>
-      </div>
-      <h4 style="margin-bottom:6px">Description</h4>
-      <p class="text-sm text-muted" style="line-height:1.7;margin-bottom:20px">${ev.description}</p>
-      ${ev.instructions ? `<h4 style="margin-bottom:6px">📋 Instructions</h4><p class="text-sm text-muted" style="line-height:1.7;margin-bottom:20px">${ev.instructions}</p>` : ''}
-      ${coords.length ? `<h4 style="margin-bottom:8px">👥 Coordinators</h4><div class="coordinator-cards mb-20">${coords.map((c, i) => `<div class="glass-card" style="padding:14px"><div style="font-size:.7rem;font-weight:600;text-transform:uppercase;color:var(--accent);margin-bottom:4px">Coordinator ${i + 1}</div><div style="font-weight:600">${c.name || '—'}</div><div class="text-sm text-muted">📞 ${c.phone || '—'}</div></div>`).join('')}</div>` : ''}
-      <div class="flex gap-8">
-        <button class="btn btn-outline" style="flex:1" onclick="closeModal();openEditEventTeacher('${ev.id}')">✏️ Edit</button>
-        <button class="btn btn-outline" style="flex:1" onclick="closeModal();openManageCoordinators('${ev.id}')">👥 Coordinators</button>
-        ${ev.student_sheet_link ? `<button class="btn btn-outline" style="flex:1" onclick="window.open('${ev.student_sheet_link}','_blank')">📄 Students</button>` : ''}
-      </div>
-    `);
-  };
+
 
   // ---- Manage Coordinators ----
   window.openManageCoordinators = function (eventId) {

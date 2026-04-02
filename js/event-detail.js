@@ -138,15 +138,18 @@
 
       <!-- Actions -->
       <div class="event-detail__actions">
-        ${user && user.role === 'student' ? `
-          ${ev.event_registration_link
-            ? `<button class="btn btn-primary btn-block" onclick="openRegistrationLink()">🎟️ Register Event</button>`
-            : getEventStatus(ev.date) === 'upcoming'
-              ? `<button class="btn btn-ghost btn-block" disabled>Registration link not available</button>`
-              : `<button class="btn btn-ghost btn-block" disabled>Event Completed</button>`
-          }
-        ` : user ? `
-          <button class="btn btn-ghost btn-block" disabled>Manage from Dashboard</button>
+        ${user ? `
+          ${user.role === 'student' ? `
+            ${ev.event_registration_link
+              ? `<button class="btn btn-primary btn-block" onclick="openRegistrationLink()">🎟️ Register Event</button>`
+              : getEventStatus(ev.date) === 'upcoming'
+                ? `<button class="btn btn-ghost btn-block" disabled>Registration not available</button>`
+                : `<button class="btn btn-ghost btn-block" disabled>Event Completed</button>`
+            }
+            ${isFavorite(user.id, ev.id) ? `<button id="favBtn" class="btn btn-outline btn-block" onclick="toggleFavDetail()">★ Remove Favorite</button>` : `<button id="favBtn" class="btn btn-ghost btn-block" onclick="toggleFavDetail()">☆ Add Favorite</button>`}
+          ` : `
+            <button class="btn btn-primary btn-block" onclick="goToDashboard()">⚙️ Manage Event</button>
+          `}
         ` : `
           <a href="login.html" class="btn btn-primary btn-block">Login to Register</a>
         `}

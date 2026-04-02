@@ -263,7 +263,7 @@ function openEventDetailModal(id) {
         `).join('')}
       </div>
     ` : ''}
-    ${ev.event_registration_link ? `<button class="btn btn-primary btn-block" onclick="window.open('${ev.event_registration_link}','_blank')">📝 Register Now</button>` : ''}
+const user = getCurrentUser();\n${user && user.role === 'student' && ev.event_registration_link ? `<button class="btn btn-primary btn-block" onclick="window.open('${ev.event_registration_link}','_blank')">📝 Register Now</button>` : ''}
   `);
 }
 
@@ -394,6 +394,89 @@ window.applySettingsTheme = function(theme) {
   localStorage.setItem('cem_theme', theme);
   updateThemeIcon(theme);
   showToast(theme === 'dark' ? '🌙 Dark mode activated' : '☀️ Light mode activated');
+};
+
+// --- Navigate to full event page (for admin/teacher) ---
+window.openEvent = function(id) {
+  window.location.href = 'event.html?id=' + encodeURIComponent(id);
+};
+
+// ===== SHARED EVENT MODAL (Role-aware) - Replaces openEventDetailModal =====
+window.openEventModal = function(id) {
+  const ev = getEventById(id);
+  if (!ev) { showToast('Event not found', 'error'); return; }
+  
+  const user = getCurrentUser();
+  if (!user) { showToast('Please login', 'error'); return; }
+  
+  const allUsers = getUsers();
+  const teacherEmails = getEventTeachers(ev);
+  const teacherDetails = teacherEmails.map(email => {
+    const t = allUsers.find(u => u.email === email && u.role === 'teacher');
+    return t || { name: email };
+  });
+  
+  const coords = ev.coordinators || [];
+  const evStatus = getEventStatus(ev.date);
+  
+  let actionButtons = '';
+  
+  // Role-specific actions
+  if (user.role === 'admin') {
+    actionButtons = `
+      <div class="event-modal-actions">
+        <button class="btn btn-primary btn-sm" onclick="closeModal(); openEditEvent('${id}')">✏️ Edit Event</button>
+        <button class="btn btn-danger btn-sm" onclick="closeModal(); deleteEvent('${id}')">🗑️ Delete</button>
+        <button class="btn btn-ghost btn-sm" onclick="closeModal(); openCreateEvent()">➕ New Event</button>
+      </div>`;
+  } else if (user.role === 'teacher') {
+    if (isTeacherAssigned(ev, user.email)) {
+      actionButtons = `
+        <div class="event-modal-actions">
+          <button class="btn btn-primary btn-sm" onclick="closeModal(); openEditEventTeacher('${id}')">✏️ Edit</button>
+          <button class="btn btn-outline btn-sm" onclick="closeModal(); openManageCoordinators('${id}')">👥 Coordinators</button>
+          ${ev.student_sheet_link ? `<button class="btn btn-ghost btn-sm" onclick="window.open('${ev.student_sheet_link}', '_blank')">📄 Students</button>` : ''}
+        </div>`;
+    } else {
+      actionButtons = '<p class="text-sm text-muted">Not assigned to this event</p>';
+    }
+  } else if (user.role === 'student') {
+    const isFav = isFavorite(user.id, ev.id);
+    actionButtons = `
+      <div class="event-modal-actions">
+        ${ev.event_registration_link ? `<button class="btn btn-primary btn-sm" onclick="window.open('${ev.event_registration_link}', '_blank')">🎟️ Register</button>` : ''}
+        <button class="btn btn-ghost btn-sm" onclick="toggleFavorite('${user.id}', '${id}'); closeModal()" style="font-size:1.2rem; color:${isFav ? '#FFD700' : ''}">
+          ${isFav ? '★ Remove Favorite' : '☆ Add Favorite'}
+        </button>
+      </div>`;
+  }
+  
+  showModal(ev.title, `
+    <div class="mb-12">${getStatusBadge(evStatus)}</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px;font-size:.95rem">
+      <div><strong>📍 Location:</strong> ${ev.venue}${ev.floor ? ' · 🏢 ' + ev.floor : ''}</div>
+      <div><strong>📅 When:</strong> ${formatDate(ev.date)} · ${ev.time}</div>
+      ${teacherDetails.length ? `<div><strong>👨‍🏫 Teachers:</strong> ${teacherDetails.map(t => t.name).join(', ')}</div>` : ''}
+    </div>
+    <h4 style="margin-bottom:6px">About</h4>
+    <p class="text-sm text-muted" style="line-height:1.7;margin-bottom:20px">${ev.description}</p>
+    ${ev.instructions ? `<h4 style="margin-bottom:6px">📋 Instructions</h4><p class="text-sm text-muted" style="line-height:1.7;margin-bottom:20px">${ev.instructions}</p>` : ''}
+    
+    ${coords.length ? `
+      <h4 style="margin-bottom:10px">👥 Coordinators (${coords.length})</h4>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        ${coords.map((c, i) => `
+          <div class="glass-card" style="padding:12px;font-size:.9rem">
+            <div style="font-size:.7rem;font-weight:600;color:var(--accent);">Coord ${i+1}</div>
+            <div style="font-weight:600">${c.name || '—'}</div>
+            <div class="text-muted">${c.phone || '—'}</div>
+          </div>
+        `).join('')}
+      </div>
+    ` : ''}
+    
+    ${actionButtons}
+  `);
 };
 
 // --- Init on load ---

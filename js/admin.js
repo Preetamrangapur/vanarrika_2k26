@@ -60,8 +60,8 @@
     renderFeaturedSlider('featuredSliderContainer');
     const upcoming = events.filter(e => getEventStatus(e.date) === 'upcoming');
     const completed = events.filter(e => getEventStatus(e.date) === 'completed');
-    renderScrollEvents('upcomingScroll', upcoming, 'switchSection');
-    renderScrollEvents('completedScroll', completed, 'switchSection');
+    renderScrollEvents('upcomingScroll', upcoming, 'openEventModal');
+    renderScrollEvents('completedScroll', completed, 'openEventModal');
     // Notices banner
     const nb = document.getElementById('noticesBannerHome');
     if (nb && notices.length) {
@@ -81,14 +81,14 @@
     // --- Recent Events (dashboard) ---
     const recentEvents = [...events].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
     document.getElementById('recentEventsList').innerHTML = recentEvents.map(ev => `
-      <div class="data-item" style="cursor:pointer" onclick="switchSection('sec-events')">
+      <div class="data-item" style="cursor:pointer" onclick="openEventModal('${ev.id}')">
         <div class="data-item__header">
           <div class="data-item__title">${ev.title}</div>
           ${getStatusBadge(getEventStatus(ev.date))}
         </div>
         <div class="data-item__meta">📍 ${ev.venue} · 📅 ${formatDate(ev.date)} · ${ev.time}</div>
       </div>
-    `).join('') || '<div class="empty-state"><p class="empty-state__text">No events yet</p></div>';
+    `).join('') || '<div class="empty-state"><p class="empty-state__text">No events yet</p></div>'; 
 
     // --- Activity Timeline ---
     document.getElementById('activityTimeline').innerHTML = `
@@ -110,12 +110,12 @@
       const names = getTeacherNames(ev);
       const teacherStr = names.length ? names.join(', ') : 'Unassigned';
       return `
-        <div class="data-item">
+        <div class="data-item" style="cursor:pointer" onclick="openEventModal('${ev.id}')" title="View details">
           <div class="data-item__header">
             <div class="data-item__title">${ev.title}</div>
             <div class="data-item__actions">
-              <button class="btn btn-ghost btn-sm" onclick="openEditEvent('${ev.id}')">✏️ Edit</button>
-              <button class="btn btn-danger btn-sm" onclick="deleteEvent('${ev.id}')">🗑️</button>
+              <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openEditEvent('${ev.id}')">✏️ Edit</button>
+              <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteEvent('${ev.id}')">🗑️</button>
             </div>
           </div>
           <div class="data-item__meta">
@@ -123,7 +123,7 @@
             👨‍🏫 ${teacherStr} ${getStatusBadge(getEventStatus(ev.date))}
           </div>
         </div>`;
-    }).join('') || '<div class="empty-state"><div class="empty-state__icon">📅</div><p class="empty-state__text">No events yet</p></div>';
+    }).join('') || '<div class="empty-state"><div class="empty-state__icon">📅</div><p class="empty-state__text">No events yet</p></div>'; 
 
     // --- Teachers section ---
     const approvalPanel = document.getElementById('approvalPanel');
