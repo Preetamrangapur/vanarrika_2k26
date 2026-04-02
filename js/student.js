@@ -81,30 +81,106 @@
       return t || { name: email, email: email, phone: '', department: '' };
     });
     const fav = isFavorite(user.id, ev.id);
+    const evStatus = getEventStatus(ev.date);
 
-    showModal(ev.title, `
-      <div class="mb-12">${getStatusBadge(getEventStatus(ev.date))}</div>
-      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
-        <div class="flex items-center gap-8 text-sm">📍 ${ev.venue}</div>
-        <div class="flex items-center gap-8 text-sm">🏢 ${ev.floor || 'N/A'}</div>
-        <div class="flex items-center gap-8 text-sm">📅 ${formatDate(ev.date)} · ${ev.time}</div>
-      </div>
-      <h4 style="margin-bottom:6px">About this Event</h4>
-      <p class="text-sm text-muted" style="line-height:1.7;margin-bottom:20px">${ev.description}</p>
-      ${ev.instructions ? `<h4 style="margin-bottom:6px">📋 Instructions</h4><p class="text-sm text-muted" style="line-height:1.7;margin-bottom:20px">${ev.instructions}</p>` : ''}
-      <h4 style="margin-bottom:10px">👨‍🏫 Teachers</h4>
-      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
-        ${teacherDetails.map(t => `
-          <div class="glass-card" style="padding:14px;border:1px solid var(--border)">
-            <div style="font-weight:600">${t.name}</div>
-            <div class="text-sm text-muted">${t.department ? '🏢 ' + t.department : ''}</div>
-            <div class="text-sm text-muted">${t.phone ? '📞 ' + t.phone : ''}</div>
+    // Build coordinators section
+    const coords = ev.coordinators || [];
+    let coordHtml = '';
+    if (coords.length) {
+      coordHtml = `
+        <div class="event-modal-section">
+          <div class="event-modal-section__accent"></div>
+          <div class="event-modal-section__content">
+            <h3 class="event-modal-section__title">👥 Student Coordinators</h3>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              ${coords.map((c, i) => `
+                <div class="glass-card" style="padding:12px;border:1px solid var(--border)">
+                  <div style="font-size:.65rem;font-weight:600;text-transform:uppercase;color:var(--accent);margin-bottom:3px">Coordinator ${i + 1}</div>
+                  <div style="font-weight:600;font-size:.9rem">${c.name || '—'}</div>
+                  <div class="text-sm text-muted">📞 ${c.phone || '—'}</div>
+                </div>
+              `).join('')}
+            </div>
           </div>
-        `).join('')}
+        </div>
+      `;
+    }
+
+    // Build teachers section
+    let teacherHtml = '';
+    if (teacherDetails.length) {
+      teacherHtml = `
+        <div class="event-modal-section">
+          <div class="event-modal-section__accent"></div>
+          <div class="event-modal-section__content">
+            <h3 class="event-modal-section__title">👨‍🏫 Teachers</h3>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              ${teacherDetails.map(t => `
+                <div class="glass-card" style="padding:12px;border:1px solid var(--border)">
+                  <div style="font-weight:600;font-size:.9rem">${t.name}</div>
+                  ${t.department ? `<div class="text-sm text-muted">🏢 ${t.department}</div>` : ''}
+                  ${t.phone ? `<div class="text-sm text-muted">📞 ${t.phone}</div>` : ''}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    showEventDetailModal(ev.title, `
+      <!-- Hero Banner with Event Image & Name -->
+      <div class="event-modal-hero">
+        <img src="${ev.image}" alt="${ev.title}" onerror="this.style.display='none'">
+        <div class="event-modal-hero__overlay"></div>
+        <div class="event-modal-hero__content">
+          <div class="event-modal-hero__emoji">🎉</div>
+          <h2 class="event-modal-hero__title">${ev.title}</h2>
+          <p class="event-modal-hero__tagline">Showcasing creativity, rhythm, and cultural beats on the grand Explorika stage!</p>
+        </div>
       </div>
-      <div class="flex gap-8">
-        ${ev.event_registration_link ? `<button class="btn btn-primary" style="flex:1" onclick="window.open('${ev.event_registration_link}','_blank')">📝 Register</button>` : ''}
-        <button class="btn btn-outline" style="flex:1" onclick="toggleFav('${ev.id}');closeModal()">
+
+      <!-- About the Event -->
+      <div class="event-modal-sections">
+        <div class="event-modal-section">
+          <div class="event-modal-section__accent"></div>
+          <div class="event-modal-section__content">
+            <h3 class="event-modal-section__title">📖 About the Event</h3>
+            <p class="event-modal-section__text">${ev.description}</p>
+          </div>
+        </div>
+
+        ${ev.instructions ? `
+        <div class="event-modal-section">
+          <div class="event-modal-section__accent" style="background:var(--warning)"></div>
+          <div class="event-modal-section__content">
+            <h3 class="event-modal-section__title">📋 Instructions</h3>
+            <p class="event-modal-section__text">${ev.instructions}</p>
+          </div>
+        </div>
+        ` : ''}
+
+        <!-- Schedule -->
+        <div class="event-modal-section">
+          <div class="event-modal-section__accent"></div>
+          <div class="event-modal-section__content">
+            <h3 class="event-modal-section__title">🕐 Schedule</h3>
+            <ul class="event-modal-schedule">
+              <li><span class="event-modal-schedule__label">Date:</span> ${formatDate(ev.date)}</li>
+              <li><span class="event-modal-schedule__label">Time:</span> ${ev.time}</li>
+              <li><span class="event-modal-schedule__label">Venue:</span> ${ev.venue}${ev.floor ? ', ' + ev.floor : ''}</li>
+            </ul>
+          </div>
+        </div>
+
+        ${teacherHtml}
+        ${coordHtml}
+      </div>
+
+      <!-- Actions -->
+      <div class="event-modal-actions">
+        ${ev.event_registration_link ? `<button class="btn btn-primary btn-block" onclick="window.open('${ev.event_registration_link}','_blank')">🎟️ Register Now</button>` : ''}
+        <button class="btn btn-outline btn-block" onclick="toggleFav('${ev.id}');closeModal()">
           ${fav ? '💔 Remove Favorite' : '❤️ Add Favorite'}
         </button>
       </div>

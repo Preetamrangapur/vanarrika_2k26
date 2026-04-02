@@ -104,6 +104,22 @@ function closeModal() {
   }
 }
 
+// --- Event Detail Modal (hero banner style, no header) ---
+function showEventDetailModal(title, bodyHTML) {
+  const existing = document.querySelector('.modal-overlay');
+  if (existing) existing.remove();
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal event-detail-modal">
+      <button class="event-detail-modal__close" onclick="closeModal()">&times;</button>
+      <div class="modal__body" style="padding:0">${bodyHTML}</div>
+    </div>`;
+  document.body.appendChild(overlay);
+  setTimeout(() => overlay.classList.add('show'), 10);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+}
+
 // --- Helpers ---
 function formatDate(dateStr) {
   const d = new Date(dateStr);
