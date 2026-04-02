@@ -179,7 +179,7 @@
 
       <!-- Actions -->
       <div class="event-modal-actions">
-        ${ev.event_registration_link ? `<button class="btn btn-primary btn-block" onclick="window.open('${ev.event_registration_link}','_blank')">🎟️ Register Now</button>` : ''}
+const user = getCurrentUser();\n${user && user.role === 'student' && ev.event_registration_link ? `<button class="btn btn-primary btn-block" onclick="window.open('${ev.event_registration_link}','_blank')">🎟️ Register Now</button>` : ''}
         <button class="btn btn-outline btn-block" onclick="toggleFav('${ev.id}');closeModal()">
           ${fav ? '💔 Remove Favorite' : '❤️ Add Favorite'}
         </button>
