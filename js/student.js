@@ -113,7 +113,7 @@
         <div class="event-modal-section">
           <div class="event-modal-section__accent"></div>
           <div class="event-modal-section__content">
-            <h3 class="event-modal-section__title">👨‍🏫 Teachers</h3>
+            <h3 class="event-modal-section__title">👨‍🏫 Faculty Coordinator</h3>
             <div style="display:flex;flex-direction:column;gap:10px">
               ${teacherDetails.map(t => `
                 <div class="glass-card" style="padding:12px;border:1px solid var(--border)">
@@ -179,7 +179,7 @@
 
       <!-- Actions -->
       <div class="event-modal-actions">
-const user = getCurrentUser();\n${user && user.role === 'student' && ev.event_registration_link ? `<button class="btn btn-primary btn-block" onclick="window.open('${ev.event_registration_link}','_blank')">🎟️ Register Now</button>` : ''}
+        ${user && user.role === 'student' && ev.event_registration_link ? `<button class="btn btn-primary btn-block" onclick="window.open('${ev.event_registration_link}','_blank')">🎟️ Register Now</button>` : ''}
         <button class="btn btn-outline btn-block" onclick="toggleFav('${ev.id}');closeModal()">
           ${fav ? '💔 Remove Favorite' : '❤️ Add Favorite'}
         </button>

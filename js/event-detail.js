@@ -47,7 +47,7 @@
   let teacherInfoHtml = '';
   if (assignedTeachers.length) {
     teacherInfoHtml = `
-      <h3 class="mb-8">👨‍🏫 Assigned Teachers (${assignedTeachers.length})</h3>
+      <h3 class="mb-8">👨‍🏫 Faculty Coordinator(s) (${assignedTeachers.length})</h3>
       <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px;">
         ${assignedTeachers.map(t => {
           const initial = t.name.charAt(0).toUpperCase();

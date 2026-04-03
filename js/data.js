@@ -4,12 +4,14 @@
 
 const DEFAULT_USERS = [
   { id: 'u1', name: 'Admin User',      email: 'admin@college.edu',    password: 'admin123',    role: 'admin',   avatar: '' },
-  { id: 'u2', name: 'Dr. Priya Sharma', email: 'priya@college.edu',   password: 'teacher123',  role: 'teacher', avatar: '' },
-  { id: 'u3', name: 'Prof. Rahul Verma',email: 'rahul@college.edu',   password: 'teacher123',  role: 'teacher', avatar: '' },
+  { id: 'u2', name: 'Dr. Priya Sharma', email: 'priya@college.edu',   password: 'teacher123',  role: 'teacher', avatar: '', phone: '+91 9876543210', department: 'Computer Science' },
+  { id: 'u3', name: 'Prof. Rahul Verma',email: 'rahul@college.edu',   password: 'teacher123',  role: 'teacher', avatar: '', phone: '+91 9876543211', department: 'Information Technology' },
   { id: 'u4', name: 'Ananya Singh',     email: 'ananya@college.edu',  password: 'student123',  role: 'student', avatar: '' },
   { id: 'u5', name: 'Rohan Mehta',      email: 'rohan@college.edu',   password: 'student123',  role: 'student', avatar: '' },
   { id: 'u6', name: 'Sneha Patel',      email: 'sneha@college.edu',   password: 'student123',  role: 'student', avatar: '' },
 ];
+
+
 
 const DEFAULT_EVENTS = [
   {
@@ -182,7 +184,8 @@ const DEFAULT_REGISTRATIONS = [];
 // ============================================================
 
 function seedData() {
-  if (!localStorage.getItem('cem_users')) {
+  let usersStr = localStorage.getItem('cem_users');
+  if (!usersStr || !usersStr.includes('department')) {
     localStorage.setItem('cem_users', JSON.stringify(DEFAULT_USERS));
   }
   if (!localStorage.getItem('cem_events')) {

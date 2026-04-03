@@ -706,10 +706,6 @@ ul{list-style:none}
     display: flex !important;
   }
   
-  .navbar__search {
-    display: none;
-  }
-  
   .navbar__search input {
     width: 140px;
   }

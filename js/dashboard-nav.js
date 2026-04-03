@@ -241,7 +241,7 @@ function openEventDetailModal(id) {
     <h4 style="margin-bottom:6px">About this Event</h4>
     <p class="text-sm text-muted" style="line-height:1.7;margin-bottom:20px">${ev.description}</p>
     ${ev.instructions ? `<h4 style="margin-bottom:6px">📋 Instructions</h4><p class="text-sm text-muted" style="line-height:1.7;margin-bottom:20px">${ev.instructions}</p>` : ''}
-    <h4 style="margin-bottom:10px">👨‍🏫 Teachers</h4>
+    <h4 style="margin-bottom:10px">👨‍🏫 Faculty Coordinator</h4>
     <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
       ${teacherDetails.length ? teacherDetails.map(t => `
         <div class="glass-card" style="padding:14px;border:1px solid var(--border)">
@@ -263,7 +263,10 @@ function openEventDetailModal(id) {
         `).join('')}
       </div>
     ` : ''}
-const user = getCurrentUser();\n${user && user.role === 'student' && ev.event_registration_link ? `<button class="btn btn-primary btn-block" onclick="window.open('${ev.event_registration_link}','_blank')">📝 Register Now</button>` : ''}
+    ${(() => {
+      const user = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+      return (user && user.role === 'student' && ev.event_registration_link) ? `<button class="btn btn-primary btn-block" onclick="window.open('${ev.event_registration_link}','_blank')">📝 Register Now</button>` : '';
+    })()}
   `);
 }
 
@@ -456,11 +459,25 @@ window.openEventModal = function(id) {
     <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px;font-size:.95rem">
       <div><strong>📍 Location:</strong> ${ev.venue}${ev.floor ? ' · 🏢 ' + ev.floor : ''}</div>
       <div><strong>📅 When:</strong> ${formatDate(ev.date)} · ${ev.time}</div>
-      ${teacherDetails.length ? `<div><strong>👨‍🏫 Teachers:</strong> ${teacherDetails.map(t => t.name).join(', ')}</div>` : ''}
+
     </div>
     <h4 style="margin-bottom:6px">About</h4>
     <p class="text-sm text-muted" style="line-height:1.7;margin-bottom:20px">${ev.description}</p>
     ${ev.instructions ? `<h4 style="margin-bottom:6px">📋 Instructions</h4><p class="text-sm text-muted" style="line-height:1.7;margin-bottom:20px">${ev.instructions}</p>` : ''}
+    
+    ${teacherDetails.length ? `
+      <h4 style="margin-bottom:10px">👨‍🏫 Faculty Coordinator (${teacherDetails.length})</h4>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
+        ${teacherDetails.map((t, i) => `
+          <div class="glass-card" style="padding:12px;font-size:.9rem">
+            <div style="font-size:.7rem;font-weight:600;color:var(--accent);">Faculty ${i+1}</div>
+            <div style="font-weight:600">${t.name || '—'}</div>
+            <div class="text-muted" style="margin-bottom:2px">${t.phone || '—'}</div>
+            <div class="text-muted">${t.department ? t.department : ''}</div>
+          </div>
+        `).join('')}
+      </div>
+    ` : ''}
     
     ${coords.length ? `
       <h4 style="margin-bottom:10px">👥 Coordinators (${coords.length})</h4>
