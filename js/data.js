@@ -3,86 +3,48 @@
 // ============================================================
 
 const DEFAULT_USERS = [
-  { id: 'u1', name: 'Admin User',      email: 'admin@college.edu',    password: 'admin123',    role: 'admin',   avatar: '' },
-  { id: 'u2', name: 'Dr. Priya Sharma', email: 'priya@college.edu',   password: 'teacher123',  role: 'teacher', avatar: '', phone: '+91 9876543210', department: 'Computer Science' },
-  { id: 'u3', name: 'Prof. Rahul Verma',email: 'rahul@college.edu',   password: 'teacher123',  role: 'teacher', avatar: '', phone: '+91 9876543211', department: 'Information Technology' },
-  { id: 'u4', name: 'Ananya Singh',     email: 'ananya@college.edu',  password: 'student123',  role: 'student', avatar: '' },
-  { id: 'u5', name: 'Rohan Mehta',      email: 'rohan@college.edu',   password: 'student123',  role: 'student', avatar: '' },
-  { id: 'u6', name: 'Sneha Patel',      email: 'sneha@college.edu',   password: 'student123',  role: 'student', avatar: '' },
+  { id: 'u1', name: 'Admin User', email: 'admin@college.edu', password: 'admin123', role: 'admin', avatar: '' },
+  { id: 'u2', name: 'Dr. Priya Sharma', email: 'priya@college.edu', password: 'teacher123', role: 'teacher', avatar: '', phone: '+91 9876543210', department: 'Computer Science' },
+  { id: 'u3', name: 'Prof. Rahul Verma', email: 'rahul@college.edu', password: 'teacher123', role: 'teacher', avatar: '', phone: '+91 9876543211', department: 'Information Technology' },
+  { id: 'u4', name: 'Ananya Singh', email: 'ananya@college.edu', password: 'student123', role: 'student', avatar: '' },
+  { id: 'u5', name: 'Rohan Mehta', email: 'rohan@college.edu', password: 'student123', role: 'student', avatar: '' },
+  { id: 'u6', name: 'Sneha Patel', email: 'sneha@college.edu', password: 'student123', role: 'student', avatar: '' },
 ];
 
 
 
 const DEFAULT_EVENTS = [
   {
-    id: 'e1',
-    title: 'AI & Machine Learning Summit',
-    description: 'Explore the latest advances in artificial intelligence and machine learning. Industry experts share insights on neural networks, deep learning, and real-world AI applications transforming industries.',
-    venue: 'LT-PCSA',
-    floor: '1st Floor',
-    date: '2026-03-20',
-    time: '10:00 AM',
-    image: 'images/event-ai.webp',
-    speaker: 'Dr. Kavita Rao',
-    speakerImg: '',
-    speakerBio: 'AI Research Lead at TechNova Labs with 15+ years of experience in deep learning and NLP.',
-    status: 'upcoming',
-    category: 'Seminar',
-    assignedTeacher: 'priya@college.edu',
-    assignedTeachers: ['priya@college.edu'],
-    coordinators: [],
-    featured: true
-  },
-  {
-    id: 'e2',
-    title: 'Hackathon: Code for Change',
-    description: 'A 24-hour hackathon where teams build solutions for social impact. Prizes worth ₹2,00,000 for the winning teams. Open to all departments.',
-    venue: 'VMCC',
-    floor: 'Ground Floor',
-    date: '2026-03-22',
-    time: '09:00 AM',
-    image: 'images/event-hackathon.webp',
-    speaker: 'Arjun Kapoor',
-    speakerImg: '',
-    speakerBio: 'CTO of StartupHub India and serial hackathon mentor.',
-    status: 'upcoming',
-    category: 'Hackathon',
-    assignedTeacher: 'rahul@college.edu',
-    assignedTeachers: ['rahul@college.edu'],
-    coordinators: [],
-    featured: true
-  },
-  {
-    id: 'e3',
-    title: 'Web3 & Blockchain Workshop',
-    description: 'Hands-on workshop covering decentralized applications, smart contracts, and the future of blockchain technology in finance and beyond.',
+    id: 'e9',
+    title: 'Lengacy Lekhan (Essay Writing)',
+    description: 'Showcase your writing skills in our annual essay writing competition. Express your thoughts, structure your arguments, and win exciting prizes!',
     venue: 'LC 101',
     floor: '2nd Floor',
-    date: '2026-03-25',
-    time: '02:00 PM',
-    image: 'images/event-blockchain.webp',
-    speaker: 'Neha Gupta',
+    date: '2026-04-10',
+    time: '11:00 AM',
+    image: 'images/event-essay.png',
+    speaker: '',
     speakerImg: '',
-    speakerBio: 'Blockchain developer and Web3 evangelist at ChainSphere.',
+    speakerBio: '',
     status: 'upcoming',
-    category: 'Workshop',
+    category: 'Competition',
     assignedTeacher: 'priya@college.edu',
     assignedTeachers: ['priya@college.edu'],
     coordinators: [],
     featured: false
   },
   {
-    id: 'e4',
-    title: 'Startup Pitch Competition',
-    description: 'Present your startup idea to a panel of venture capitalists and industry leaders. Get funding, mentorship, and the chance to launch your dream.',
-    venue: 'OAT',
-    floor: 'Ground Floor',
-    date: '2026-03-28',
-    time: '11:00 AM',
-    image: 'images/event-startup.webp',
-    speaker: 'Vikram Desai',
+    id: 'e10',
+    title: 'Chitron (Drawing)',
+    description: 'Let your imagination flow on the canvas in the Chitron Drawing contest. Use any medium to capture your creativity and win exciting prizes!',
+    venue: 'LH 101',
+    floor: '1st Floor',
+    date: '2026-04-11',
+    time: '02:00 PM',
+    image: 'images/event-drawing.png',
+    speaker: '',
     speakerImg: '',
-    speakerBio: 'Managing Partner at Velocity Ventures, backed 50+ startups.',
+    speakerBio: '',
     status: 'upcoming',
     category: 'Competition',
     assignedTeacher: 'rahul@college.edu',
@@ -91,90 +53,337 @@ const DEFAULT_EVENTS = [
     featured: true
   },
   {
-    id: 'e5',
-    title: 'Cybersecurity Masterclass',
-    description: 'Learn ethical hacking, penetration testing, and cybersecurity best practices from industry professionals. Capture-the-flag challenge included!',
+    id: 'e11',
+    title: 'Henora (Mehendi)',
+    description: 'Showcase your intricate mehendi designs in the Henora Mehendi competition. Bring your creativity and adorn hands with beautiful, traditional, and contemporary patterns.',
+    venue: 'OAT',
+    floor: 'Ground Floor',
+    date: '2026-04-12',
+    time: '10:00 AM',
+    image: 'images/event-mehendi.png',
+    speaker: '',
+    speakerImg: '',
+    speakerBio: '',
+    status: 'upcoming',
+    category: 'Competition',
+    assignedTeacher: 'priya@college.edu',
+    assignedTeachers: ['priya@college.edu'],
+    coordinators: [],
+    featured: false
+  },
+  {
+    id: 'e12',
+    title: 'AlgoCrown (Coding)',
+    description: 'Battle it out in AlgoCrown, the ultimate coding competition. Solve complex algorithmic challenges, optimize your logic, and claim the coding crown!',
     venue: 'LC 102',
     floor: '2nd Floor',
-    date: '2026-03-15',
-    time: '03:00 PM',
-    image: 'images/event-cyber.webp',
-    speaker: 'Amit Joshi',
+    date: '2026-04-15',
+    time: '09:00 AM',
+    image: 'images/event-coding.png',
+    speaker: '',
     speakerImg: '',
-    speakerBio: 'Chief Security Officer at CyberShield and certified ethical hacker.',
-    status: 'completed',
-    category: 'Workshop',
-    assignedTeacher: 'priya@college.edu',
-    assignedTeachers: ['priya@college.edu'],
-    coordinators: [],
-    featured: false
-  },
-  {
-    id: 'e6',
-    title: 'Design Thinking Bootcamp',
-    description: 'Intensive bootcamp on human-centered design, prototyping, and innovation methodologies used by top product companies worldwide.',
-    venue: 'LH 101',
-    floor: '1st Floor',
-    date: '2026-03-12',
-    time: '10:00 AM',
-    image: 'images/event-design.webp',
-    speaker: 'Riya Menon',
-    speakerImg: '',
-    speakerBio: 'Head of Design at PixelCraft Studios, ex-Google UX researcher.',
-    status: 'completed',
-    category: 'Bootcamp',
-    assignedTeacher: 'rahul@college.edu',
-    assignedTeachers: ['rahul@college.edu'],
-    coordinators: [],
-    featured: false
-  },
-  {
-    id: 'e7',
-    title: 'Cloud Computing Symposium',
-    description: 'Deep dive into cloud architectures, serverless computing, and multi-cloud strategies with hands-on AWS and Azure labs.',
-    venue: 'LT-PCSA',
-    floor: '1st Floor',
-    date: '2026-04-02',
-    time: '09:30 AM',
-    image: 'images/event-cloud.webp',
-    speaker: 'Sanjay Kulkarni',
-    speakerImg: '',
-    speakerBio: 'Solutions Architect at AWS and cloud computing author.',
+    speakerBio: '',
     status: 'upcoming',
-    category: 'Seminar',
-    assignedTeacher: 'priya@college.edu',
-    assignedTeachers: ['priya@college.edu'],
-    coordinators: [],
-    featured: false
-  },
-  {
-    id: 'e8',
-    title: 'Robotics & IoT Expo',
-    description: 'Showcase of cutting-edge robotics projects and IoT innovations by students and industry partners. Live demos and competitions.',
-    venue: 'VMCC',
-    floor: 'Ground Floor',
-    date: '2026-04-05',
-    time: '10:00 AM',
-    image: 'images/event-robotics.webp',
-    speaker: 'Dr. Meera Iyer',
-    speakerImg: '',
-    speakerBio: 'Robotics researcher at IIT and founder of RoboGenesis.',
-    status: 'upcoming',
-    category: 'Expo',
+    category: 'Competition',
     assignedTeacher: 'rahul@college.edu',
     assignedTeachers: ['rahul@college.edu'],
     coordinators: [],
     featured: true
+  },
+  {
+    id: 'e13',
+    title: 'Rang Gala (Rangoli)',
+    description: 'Bring colors to life in the Rang Gala competition! Show off your artistic skills with vibrant rangoli designs. A festival of colors, creativity, and culture.',
+    venue: 'VMCC',
+    floor: 'Ground Floor',
+    date: '2026-04-18',
+    time: '09:00 AM',
+    image: 'images/event-rangoli.png',
+    speaker: '',
+    speakerImg: '',
+    speakerBio: '',
+    status: 'upcoming',
+    category: 'Competition',
+    assignedTeacher: 'priya@college.edu',
+    assignedTeachers: ['priya@college.edu'],
+    coordinators: [],
+    featured: false
+  },
+  {
+    id: 'e14',
+    title: 'Kala Capture (Photography)',
+    description: 'Capture the essence of life and culture through your lens in the Kala Capture contest! Show us your best perspective and tell a story without words.',
+    venue: 'OAT',
+    floor: 'Ground Floor',
+    date: '2026-04-20',
+    time: '11:00 AM',
+    image: 'images/event-photography.png',
+    speaker: '',
+    speakerImg: '',
+    speakerBio: '',
+    status: 'upcoming',
+    category: 'Competition',
+    assignedTeacher: 'rahul@college.edu',
+    assignedTeachers: ['rahul@college.edu'],
+    coordinators: [],
+    featured: true
+  },
+  {
+    id: 'e15',
+    title: 'Matki Mystique (Pot Painting)',
+    description: 'Breathe new life into earthenware in the Matki Mystique pot painting competition. Unleash your creativity, blend colors, and create traditional or contemporary masterpieces.',
+    venue: 'LH 101',
+    floor: '1st Floor',
+    date: '2026-04-22',
+    time: '12:00 PM',
+    image: 'images/event-potpainting.png',
+    speaker: '',
+    speakerImg: '',
+    speakerBio: '',
+    status: 'upcoming',
+    category: 'Competition',
+    assignedTeacher: 'priya@college.edu',
+    assignedTeachers: ['priya@college.edu'],
+    coordinators: [],
+    featured: false
+  },
+  {
+    id: 'e16',
+    title: 'Chitra Mukhi (Face Painting)',
+    description: 'Transform faces into living canvases! Join the Chitra Mukhi face painting competition to showcase your blend of vibrant colors, storytelling, and artistic flair.',
+    venue: 'OAT',
+    floor: 'Ground Floor',
+    date: '2026-04-24',
+    time: '02:30 PM',
+    image: 'images/event-facepainting.png',
+    speaker: '',
+    speakerImg: '',
+    speakerBio: '',
+    status: 'upcoming',
+    category: 'Competition',
+    assignedTeacher: 'rahul@college.edu',
+    assignedTeachers: ['rahul@college.edu'],
+    coordinators: [],
+    featured: true
+  },
+  {
+    id: 'e17',
+    title: 'Chromatic Dots (Spot Painting)',
+    description: 'Showcase your creativity using vibrant colors and techniques in the Chromatic Dots spot painting competition. Turn a blank canvas into a masterpiece of color and pattern!',
+    venue: 'LH 101',
+    floor: '1st Floor',
+    date: '2026-04-25',
+    time: '10:00 AM',
+    image: 'images/event-spotpainting.png',
+    speaker: '',
+    speakerImg: '',
+    speakerBio: '',
+    status: 'upcoming',
+    category: 'Competition',
+    assignedTeacher: 'priya@college.edu',
+    assignedTeachers: ['priya@college.edu'],
+    coordinators: [],
+    featured: false
+  },
+  {
+    id: 'e18',
+    title: 'Crafted Chaos (Collage)',
+    description: 'Assemble your imagination in the Crafted Chaos collage competition. Combine different textures, colors, and media to tell a compelling story through your art!',
+    venue: 'LH 101',
+    floor: '1st Floor',
+    date: '2026-04-26',
+    time: '11:00 AM',
+    image: 'images/event-collage.png',
+    speaker: '',
+    speakerImg: '',
+    speakerBio: '',
+    status: 'upcoming',
+    category: 'Competition',
+    assignedTeacher: 'rahul@college.edu',
+    assignedTeachers: ['rahul@college.edu'],
+    coordinators: [],
+    featured: true
+  },
+  {
+    id: 'e19',
+    title: 'The IQ Conclave (Quiz)',
+    description: 'Test your knowledge across various domains in The IQ Conclave quiz competition. Challenge your intellect, answer rapidly, and prove you are the sharpest mind!',
+    venue: 'LC 102',
+    floor: '2nd Floor',
+    date: '2026-04-27',
+    time: '02:00 PM',
+    image: 'images/event-quiz.png',
+    speaker: '',
+    speakerImg: '',
+    speakerBio: '',
+    status: 'upcoming',
+    category: 'Competition',
+    assignedTeacher: 'priya@college.edu',
+    assignedTeachers: ['priya@college.edu'],
+    coordinators: [],
+    featured: false
+  },
+  {
+    id: 'e20',
+    title: 'Junk To Jewel (Best Out Of Scrap)',
+    description: 'Transform everyday waste into beautiful, usable creations! Join the Junk To Jewel competition to showcase your sustainability skills and craft the best out of scrap.',
+    venue: 'LH 101',
+    floor: '1st Floor',
+    date: '2026-04-28',
+    time: '10:00 AM',
+    image: 'images/event-junktojewel.png',
+    speaker: '',
+    speakerImg: '',
+    speakerBio: '',
+    status: 'upcoming',
+    category: 'Competition',
+    assignedTeacher: 'rahul@college.edu',
+    assignedTeachers: ['rahul@college.edu'],
+    coordinators: [],
+    featured: true
+  },
+  {
+    id: 'e21',
+    title: 'Clash Of Minds (Debate)',
+    description: 'Articulate your arguments and challenge opposing views! Join the Clash Of Minds debate competition to showcase your eloquence, logical reasoning, and persuasion skills.',
+    venue: 'LH 101',
+    floor: '1st Floor',
+    date: '2026-04-29',
+    time: '02:00 PM',
+    image: 'images/event-debate.png',
+    speaker: '',
+    speakerImg: '',
+    speakerBio: '',
+    status: 'upcoming',
+    category: 'Competition',
+    assignedTeacher: 'priya@college.edu',
+    assignedTeachers: ['priya@college.edu'],
+    coordinators: [],
+    featured: false
+  },
+  {
+    id: 'e22',
+    title: 'FlameFree Feast (Cook Without Fire)',
+    description: 'Whip up delicious and creative dishes without using any heat! Bring out the chef in you in the FlameFree Feast competition and impress the judges with your culinary skills.',
+    venue: 'OAT',
+    floor: 'Ground Floor',
+    date: '2026-04-30',
+    time: '11:00 AM',
+    image: 'images/event-flamefreefeast.png',
+    speaker: '',
+    speakerImg: '',
+    speakerBio: '',
+    status: 'upcoming',
+    category: 'Competition',
+    assignedTeacher: 'rahul@college.edu',
+    assignedTeachers: ['rahul@college.edu'],
+    coordinators: [],
+    featured: true
+  },
+  {
+    id: 'e23',
+    title: 'Paper Prism (Paper Presentation)',
+    description: 'Present your research, ideas, and innovations in the Paper Prism presentation event. Showcase your analytical and communication skills to industry experts and peers!',
+    venue: 'LC 102',
+    floor: '2nd Floor',
+    date: '2026-05-01',
+    time: '10:00 AM',
+    image: 'images/event-paperpresentation.png',
+    speaker: '',
+    speakerImg: '',
+    speakerBio: '',
+    status: 'upcoming',
+    category: 'Competition',
+    assignedTeacher: 'priya@college.edu',
+    assignedTeachers: ['priya@college.edu'],
+    coordinators: [],
+    featured: false
+  },
+  {
+    id: 'e24',
+    title: 'TruthLens (Documentary)',
+    description: 'Capture real-world stories and bring them to life on screen! Join the TruthLens documentary competition to showcase your storytelling, direction, and cinematography skills.',
+    venue: 'LT-PCSA',
+    floor: 'Ground Floor',
+    date: '2026-05-02',
+    time: '03:00 PM',
+    image: 'images/event-documentary.png',
+    speaker: '',
+    speakerImg: '',
+    speakerBio: '',
+    status: 'upcoming',
+    category: 'Competition',
+    assignedTeacher: 'rahul@college.edu',
+    assignedTeachers: ['rahul@college.edu'],
+    coordinators: [],
+    featured: true
+  },
+  {
+    id: 'e25',
+    title: 'Canvas Crown (Poster Designing)',
+    description: 'Design impactful posters that spread messages clearly and creatively! Join the Canvas Crown competition to show your visual communication and graphic design talent.',
+    venue: 'LH 101',
+    floor: '1st Floor',
+    date: '2026-05-03',
+    time: '10:00 AM',
+    image: 'images/event-posterdesigning.png',
+    speaker: '',
+    speakerImg: '',
+    speakerBio: '',
+    status: 'upcoming',
+    category: 'Competition',
+    assignedTeacher: 'priya@college.edu',
+    assignedTeachers: ['priya@college.edu'],
+    coordinators: [],
+    featured: false
+  },
+  {
+    id: 'e26',
+    title: 'ClipCraze (Reels Making)',
+    description: 'Showcase your editing skills and creativity in 60 seconds! Join the ClipCraze competition to create engaging and trendy reels that captivate the audience.',
+    venue: 'OAT',
+    floor: 'Ground Floor',
+    date: '2026-05-04',
+    time: '04:00 PM',
+    image: 'images/event-clipcraze.png',
+    speaker: '',
+    speakerImg: '',
+    speakerBio: '',
+    status: 'upcoming',
+    category: 'Competition',
+    assignedTeacher: 'rahul@college.edu',
+    assignedTeachers: ['rahul@college.edu'],
+    coordinators: [],
+    featured: true
+  },
+  {
+    id: 'e27',
+    title: 'Loot Legends (Treasure Hunt)',
+    description: 'Follow the clues, solve the riddles, and uncover the hidden treasure! Join the Loot Legends treasure hunt for a thrilling campus-wide adventure.',
+    venue: 'OAT',
+    floor: 'Ground Floor',
+    date: '2026-05-05',
+    time: '01:00 PM',
+    image: 'images/event-treasurehunt.png',
+    speaker: '',
+    speakerImg: '',
+    speakerBio: '',
+    status: 'upcoming',
+    category: 'Competition',
+    assignedTeacher: 'priya@college.edu',
+    assignedTeachers: ['priya@college.edu'],
+    coordinators: [],
+    featured: false
   }
 ];
 
 const DEFAULT_VENUES = [
-  { id: 'v1', name: 'LT-PCSA',  building: 'Lecture Theatre Complex',    capacity: 500, icon: '🏛️' },
-  { id: 'v2', name: 'LC 101',   building: 'Lecture Centre',             capacity: 200, icon: '📚' },
-  { id: 'v3', name: 'LC 102',   building: 'Lecture Centre',             capacity: 200, icon: '📚' },
-  { id: 'v4', name: 'LH 101',   building: 'Lecture Hall',               capacity: 150, icon: '🎓' },
-  { id: 'v5', name: 'OAT',      building: 'Open Air Theatre',           capacity: 1000,icon: '🎭' },
-  { id: 'v6', name: 'VMCC',     building: 'Victor Menezes Convention Centre', capacity: 800, icon: '🏢' },
+  { id: 'v1', name: 'LT-PCSA', building: 'Lecture Theatre Complex', capacity: 500, icon: '🏛️' },
+  { id: 'v2', name: 'LC 101', building: 'Lecture Centre', capacity: 200, icon: '📚' },
+  { id: 'v3', name: 'LC 102', building: 'Lecture Centre', capacity: 200, icon: '📚' },
+  { id: 'v4', name: 'LH 101', building: 'Lecture Hall', capacity: 150, icon: '🎓' },
+  { id: 'v5', name: 'OAT', building: 'Open Air Theatre', capacity: 1000, icon: '🎭' },
+  { id: 'v6', name: 'VMCC', building: 'Victor Menezes Convention Centre', capacity: 800, icon: '🏢' },
 ];
 
 const DEFAULT_REGISTRATIONS = [];
@@ -188,8 +397,32 @@ function seedData() {
   if (!usersStr || !usersStr.includes('department')) {
     localStorage.setItem('cem_users', JSON.stringify(DEFAULT_USERS));
   }
-  if (!localStorage.getItem('cem_events')) {
+  const existingEventsStr = localStorage.getItem('cem_events');
+  if (!existingEventsStr) {
     localStorage.setItem('cem_events', JSON.stringify(DEFAULT_EVENTS));
+  } else {
+    const existingEvents = JSON.parse(existingEventsStr);
+    let updated = false;
+
+    // Purge old mock events e1-e8
+    const oldIds = ['e1', 'e2', 'e3', 'e4', 'e5', 'e6', 'e7', 'e8'];
+    const originalLength = existingEvents.length;
+    const filteredEvents = existingEvents.filter(e => !oldIds.includes(e.id));
+    if (filteredEvents.length !== originalLength) {
+      existingEvents.length = 0;
+      existingEvents.push(...filteredEvents);
+      updated = true;
+    }
+
+    DEFAULT_EVENTS.forEach(defaultEv => {
+      if (!existingEvents.find(e => e.id === defaultEv.id)) {
+        existingEvents.push(defaultEv);
+        updated = true;
+      }
+    });
+    if (updated) {
+      localStorage.setItem('cem_events', JSON.stringify(existingEvents));
+    }
   }
   if (!localStorage.getItem('cem_venues')) {
     localStorage.setItem('cem_venues', JSON.stringify(DEFAULT_VENUES));
@@ -210,26 +443,26 @@ function seedData() {
   }
 }
 
-function getUsers()          { return JSON.parse(localStorage.getItem('cem_users') || '[]'); }
-function getEvents()         { return JSON.parse(localStorage.getItem('cem_events') || '[]'); }
-function getVenues()         { return JSON.parse(localStorage.getItem('cem_venues') || '[]'); }
-function getRegistrations()  { return JSON.parse(localStorage.getItem('cem_registrations') || '[]'); }
+function getUsers() { return JSON.parse(localStorage.getItem('cem_users') || '[]'); }
+function getEvents() { return JSON.parse(localStorage.getItem('cem_events') || '[]'); }
+function getVenues() { return JSON.parse(localStorage.getItem('cem_venues') || '[]'); }
+function getRegistrations() { return JSON.parse(localStorage.getItem('cem_registrations') || '[]'); }
 
-function saveUsers(users)              { localStorage.setItem('cem_users', JSON.stringify(users)); }
-function saveEvents(events)            { localStorage.setItem('cem_events', JSON.stringify(events)); }
-function saveRegistrations(regs)       { localStorage.setItem('cem_registrations', JSON.stringify(regs)); }
+function saveUsers(users) { localStorage.setItem('cem_users', JSON.stringify(users)); }
+function saveEvents(events) { localStorage.setItem('cem_events', JSON.stringify(events)); }
+function saveRegistrations(regs) { localStorage.setItem('cem_registrations', JSON.stringify(regs)); }
 
-function getPendingTeachers()           { return JSON.parse(localStorage.getItem('cem_pending_teachers') || '[]'); }
-function savePendingTeachers(list)      { localStorage.setItem('cem_pending_teachers', JSON.stringify(list)); }
+function getPendingTeachers() { return JSON.parse(localStorage.getItem('cem_pending_teachers') || '[]'); }
+function savePendingTeachers(list) { localStorage.setItem('cem_pending_teachers', JSON.stringify(list)); }
 
-function getLocations()                 { return JSON.parse(localStorage.getItem('cem_locations') || '[]'); }
-function saveLocations(locs)            { localStorage.setItem('cem_locations', JSON.stringify(locs)); }
+function getLocations() { return JSON.parse(localStorage.getItem('cem_locations') || '[]'); }
+function saveLocations(locs) { localStorage.setItem('cem_locations', JSON.stringify(locs)); }
 
-function getNotices()                    { return JSON.parse(localStorage.getItem('cem_notices') || '[]'); }
-function saveNotices(notices)            { localStorage.setItem('cem_notices', JSON.stringify(notices)); }
+function getNotices() { return JSON.parse(localStorage.getItem('cem_notices') || '[]'); }
+function saveNotices(notices) { localStorage.setItem('cem_notices', JSON.stringify(notices)); }
 
-function getEventById(id)   { return getEvents().find(e => e.id === id); }
-function getVenueByName(n)  { return getVenues().find(v => v.name === n); }
+function getEventById(id) { return getEvents().find(e => e.id === id); }
+function getVenueByName(n) { return getVenues().find(v => v.name === n); }
 
 // Helper: get assigned teachers array (backward compat with old assignedTeacher field)
 function getEventTeachers(ev) {

@@ -29,6 +29,7 @@
     closeSidebar();
     // Render section content on switch
     if (sectionId === 'sec-home') renderHome();
+    if (sectionId === 'sec-allevents') renderAllEvents();
     if (sectionId === 'sec-favorites') renderFavorites();
     if (sectionId === 'sec-maps') renderMapsGrid('mapsContainer');
     if (sectionId === 'sec-gallery') renderGallery('galleryContainer');
@@ -68,6 +69,49 @@
     } else if (bannerEl) {
       bannerEl.innerHTML = '';
     }
+  };
+
+  // ===== ALL EVENTS =====
+  window.renderAllEvents = function () {
+    const events = getEvents();
+    const container = document.getElementById('allEventsContainer');
+    if (!container) return;
+
+    const searchQuery = (document.getElementById('searchInput').value || '').toLowerCase();
+    const filteredEvents = events.filter(e => e.title.toLowerCase().includes(searchQuery) || e.description.toLowerCase().includes(searchQuery) || e.venue.toLowerCase().includes(searchQuery));
+
+    if (!filteredEvents.length) {
+      container.innerHTML = '<div class="empty-state"><div class="empty-state__icon">🔍</div><p class="empty-state__text">No events found matching your search</p></div>';
+      return;
+    }
+
+    container.innerHTML = `<div class="event-grid">${filteredEvents.map(ev => {
+      const evStatus = getEventStatus(ev.date);
+      const isFav = isFavorite(user.id, ev.id);
+      return `
+        <div class="event-card ${evStatus === 'completed' ? 'event-card--completed' : ''}" onclick="openStudentEventDetail('${ev.id}')" style="display:flex;flex-direction:column;min-height:300px;">
+          <div style="position:relative; width:100%; height:150px; background:linear-gradient(135deg,var(--bg-card),var(--bg-body)); border-bottom:1px solid var(--border);">
+            <img src="${ev.image}" alt="${ev.title}" style="width:100%; height:100%; object-fit:cover;" onerror="this.outerHTML='<div style=\\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.5rem;\\'>🎪</div>'">
+            <div style="position:absolute; top:12px; right:12px;">${getStatusBadge(evStatus)}</div>
+          </div>
+          <div class="event-card__body" style="flex:1; display:flex; flex-direction:column;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+              <div class="event-card__title" style="margin-bottom:0;flex:1">${ev.title}</div>
+              <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();toggleFav('${ev.id}')" style="font-size:1.2rem;color:${isFav ? '#FDCB6E' : 'var(--text-muted)'};padding:0 8px;height:auto;line-height:1;">${isFav ? '★' : '☆'}</button>
+            </div>
+            <div class="event-card__meta" style="flex:1;">
+              <div class="event-card__meta-row" style="margin-bottom:6px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>${ev.venue}</span>
+              </div>
+              <div class="event-card__meta-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg>
+                <span>${formatDate(ev.date)} · ${ev.time}</span>
+              </div>
+            </div>
+          </div>
+        </div>`;
+    }).join('')}</div>`;
   };
 
   // ===== EVENT DETAIL =====
@@ -207,14 +251,18 @@
     container.innerHTML = `<div class="event-grid">${favEvents.map(ev => {
       const evStatus = getEventStatus(ev.date);
       return `
-        <div class="event-card" onclick="openStudentEventDetail('${ev.id}')">
-          <div class="event-card__body">
+        <div class="event-card ${evStatus === 'completed' ? 'event-card--completed' : ''}" onclick="openStudentEventDetail('${ev.id}')" style="display:flex;flex-direction:column;min-height:300px;">
+          <div style="position:relative; width:100%; height:150px; background:linear-gradient(135deg,var(--bg-card),var(--bg-body)); border-bottom:1px solid var(--border);">
+            <img src="${ev.image}" alt="${ev.title}" style="width:100%; height:100%; object-fit:cover;" onerror="this.outerHTML='<div style=\\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.5rem;\\'>🎪</div>'">
+            <div style="position:absolute; top:12px; right:12px;">${getStatusBadge(evStatus)}</div>
+          </div>
+          <div class="event-card__body" style="flex:1; display:flex; flex-direction:column;">
             <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
               <div class="event-card__title" style="margin-bottom:0;flex:1">${ev.title}</div>
-              <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();toggleFav('${ev.id}')" style="font-size:1.2rem;color:#FDCB6E;padding:4px 8px;height:auto">★</button>
+              <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();toggleFav('${ev.id}')" style="font-size:1.2rem;color:#FDCB6E;padding:0 8px;height:auto;line-height:1;">★</button>
             </div>
-            <div class="event-card__meta">
-              <div class="event-card__meta-row">
+            <div class="event-card__meta" style="flex:1;">
+              <div class="event-card__meta-row" style="margin-bottom:6px;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                 <span>${ev.venue}</span>
               </div>
@@ -223,7 +271,6 @@
                 <span>${formatDate(ev.date)} · ${ev.time}</span>
               </div>
             </div>
-            <div class="event-card__footer">${getStatusBadge(evStatus)}</div>
           </div>
         </div>`;
     }).join('')}</div>`;
@@ -251,6 +298,7 @@
     showToast(added ? 'Added to favorites ⭐' : 'Removed from favorites', added ? 'success' : 'info');
     renderHome();
     renderFavorites();
+    if (window.renderAllEvents) renderAllEvents();
   };
 
   // Initial render

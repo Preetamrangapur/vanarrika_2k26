@@ -147,37 +147,36 @@ function renderNotices(containerId) {
 
 // --- Gallery Image Data ---
 const galleryImages = [
-  { src: 'images/gallery/gallery-1.png', caption: 'Award Ceremony — Kishkinda University' },
-  { src: 'images/gallery/gallery-2.png', caption: 'Faculty Group Photo' },
-  { src: 'images/gallery/gallery-3.png', caption: 'Cultural Fest — Traditional Wear' },
-  { src: 'images/gallery/gallery-4.png', caption: 'Food Competition — Student Projects' },
-  { src: 'images/gallery/gallery-5.png', caption: 'Culinary Arts Showcase' },
-  { src: 'images/gallery/gallery-6.png', caption: 'Pot Painting Competition' },
-  { src: 'images/gallery/gallery-7.png', caption: 'Mehendi Art Design' },
-  { src: 'images/gallery/gallery-8.png', caption: 'Face Painting Workshop' },
-  { src: 'images/gallery/gallery-9.png', caption: 'Mehendi Art — Detailed Design' },
-  { src: 'images/gallery/gallery-10.png', caption: 'Peacock Craft Art' },
-  { src: 'images/gallery/gallery-11.png', caption: 'Speech Competition' },
-  { src: 'images/gallery/gallery-12.png', caption: 'Backstage Moments' },
-  { src: 'images/gallery/gallery-13.png', caption: 'Dance Performance — Stage Show' },
-  { src: 'images/gallery/gallery-14.png', caption: 'Comedy Skit — Stage Performance' },
-  { src: 'images/gallery/gallery-15.png', caption: 'Dance Duo Performance' },
-  { src: 'images/gallery/gallery-16.png', caption: 'Certificate Distribution' },
-  { src: 'images/gallery/gallery-17.png', caption: 'Written Exam Session' },
-  { src: 'images/gallery/gallery-18.png', caption: 'Closing Ceremony — Group Photo' },
-  { src: 'images/gallery/gallery-19.png', caption: 'Faculty Team on Stage' },
-  { src: 'images/gallery/gallery-20.png', caption: 'Cultural Fest Highlights' },
-  { src: 'images/gallery/gallery-21.png', caption: 'Craft Exhibition' },
-  { src: 'images/gallery/gallery-22.png', caption: 'Event Highlights' },
-  { src: 'images/gallery/gallery-23.png', caption: 'Campus Life' },
-  { src: 'images/gallery/gallery-24.png', caption: 'Student Activities' },
-  { src: 'images/gallery/gallery-25.png', caption: 'Workshop Session' },
-  { src: 'images/gallery/gallery-26.png', caption: 'Team Building Event' },
-  { src: 'images/gallery/gallery-27.png', caption: 'Stage Performance' },
-  { src: 'images/gallery/gallery-28.png', caption: 'Group Memories' },
-  { src: 'images/gallery/gallery-29.png', caption: 'Event Ceremony' },
-  { src: 'images/gallery/gallery-30.png', caption: 'Campus Fest Moments' },
-  { src: 'images/gallery/gallery-31.png', caption: 'College Memories' },
+  { src: 'images/gallery/gallery-1.png' },
+  { src: 'images/gallery/gallery-2.png' },
+  { src: 'images/gallery/gallery-3.png' },
+  { src: 'images/gallery/gallery-4.png' },
+  { src: 'images/gallery/gallery-5.png' },
+  { src: 'images/gallery/gallery-6.png' },
+  { src: 'images/gallery/gallery-7.png' },
+  { src: 'images/gallery/gallery-8.png' },
+  { src: 'images/gallery/gallery-9.png' },
+  { src: 'images/gallery/gallery-10.png' },
+  { src: 'images/gallery/gallery-11.png' },
+  { src: 'images/gallery/gallery-12.png' },
+  { src: 'images/gallery/gallery-13.png' },
+  { src: 'images/gallery/gallery-14.png' },
+  { src: 'images/gallery/gallery-15.png' },
+  { src: 'images/gallery/gallery-16.png' },
+  { src: 'images/gallery/gallery-17.png' },
+  { src: 'images/gallery/gallery-18.png' },
+  { src: 'images/gallery/gallery-19.png' },
+  { src: 'images/gallery/gallery-20.png' },
+  { src: 'images/gallery/gallery-21.png' },
+  { src: 'images/gallery/gallery-22.png' },
+  { src: 'images/gallery/gallery-23.png' },
+  { src: 'images/gallery/gallery-24.png' },
+  { src: 'images/gallery/gallery-25.png' },
+  { src: 'images/gallery/gallery-26.png' },
+  { src: 'images/gallery/gallery-27.png' },
+  { src: 'images/gallery/gallery-28.png' },
+  { src: 'images/gallery/gallery-29.png' },
+  { src: 'images/gallery/gallery-30.png' },
 ];
 
 // --- Featured Event Slider ---
@@ -210,7 +209,7 @@ function renderFeaturedSlider(containerId) {
   if (_sliderInterval) clearInterval(_sliderInterval);
   _sliderInterval = setInterval(() => goToSlide((_sliderIdx + 1) % upcoming.length), 4000);
 }
-window.goToSlide = function(idx) {
+window.goToSlide = function (idx) {
   const track = document.getElementById('sliderTrack');
   const dots = document.querySelectorAll('#sliderDots .slider-dot');
   if (!track) return;
@@ -297,8 +296,8 @@ function renderGallery(containerId) {
   const el = document.getElementById(containerId);
   if (!el) return;
 
-  // Pick a subset for the slider (first 10 images for performance)
-  const sliderPhotos = galleryImages.slice(0, 10);
+  // Pick all images for the slider
+  const sliderPhotos = galleryImages;
 
   el.innerHTML = `
     <div class="gallery-slider-wrapper mb-20">
@@ -306,11 +305,7 @@ function renderGallery(containerId) {
         <div class="featured-slider__track" id="gallerySliderTrack">
           ${sliderPhotos.map((img, i) => `
             <div class="featured-slide" onclick="openLightbox(${i})" style="cursor:pointer">
-              <img src="${img.src}" alt="${img.caption}" onerror="this.outerHTML='<div class=\\'featured-slide__placeholder\\'>📷</div>'">
-              <div class="featured-slide__overlay">
-                <h3>${img.caption}</h3>
-                <p>📸 Photo ${i + 1} of ${sliderPhotos.length}</p>
-              </div>
+              <img src="${img.src}" alt="Photo ${i + 1}" onerror="this.outerHTML='<div class=\\'featured-slide__placeholder\\'>📷</div>'">
             </div>
           `).join('')}
         </div>
@@ -323,8 +318,8 @@ function renderGallery(containerId) {
     <div class="gallery-grid">
       ${galleryImages.map((img, i) => `
         <div class="gallery-item" onclick="openLightbox(${i})">
-          <img src="${img.src}" alt="${img.caption}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'gallery-item__placeholder\\'>📷<span>${img.caption}</span></div>'">
-          <div class="gallery-item__overlay"><span>${img.caption}</span></div>
+          <img src="${img.src}" alt="Photo ${i + 1}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'gallery-item__placeholder\\'>📷<span></span></div>'">
+          <div class="gallery-item__overlay"></div>
         </div>
       `).join('')}
     </div>
@@ -341,7 +336,7 @@ function renderGallery(containerId) {
   _gallerySliderIdx = 0;
   _gallerySliderInterval = setInterval(() => goToGallerySlide((_gallerySliderIdx + 1) % sliderPhotos.length), 3500);
 }
-window.goToGallerySlide = function(idx) {
+window.goToGallerySlide = function (idx) {
   const track = document.getElementById('gallerySliderTrack');
   const dots = document.querySelectorAll('#gallerySliderDots .slider-dot');
   if (!track) return;
@@ -349,21 +344,20 @@ window.goToGallerySlide = function(idx) {
   track.style.transform = `translateX(-${idx * 100}%)`;
   dots.forEach((d, i) => d.classList.toggle('active', i === idx));
 };
-window.openLightbox = function(idx) {
+window.openLightbox = function (idx) {
   _lightboxIdx = idx;
   const lb = document.getElementById('lightbox');
   document.getElementById('lightboxImg').src = galleryImages[idx].src;
-  document.getElementById('lightboxCaption').textContent = galleryImages[idx].caption;
   lb.classList.add('active');
   document.body.style.overflow = 'hidden';
 };
-window.closeLightbox = function() {
+window.closeLightbox = function () {
   document.getElementById('lightbox').classList.remove('active');
   document.body.style.overflow = '';
 };
-window.nextImage = function() { _lightboxIdx = (_lightboxIdx + 1) % galleryImages.length; openLightbox(_lightboxIdx); };
-window.prevImage = function() { _lightboxIdx = (_lightboxIdx - 1 + galleryImages.length) % galleryImages.length; openLightbox(_lightboxIdx); };
-document.addEventListener('keydown', function(e) {
+window.nextImage = function () { _lightboxIdx = (_lightboxIdx + 1) % galleryImages.length; openLightbox(_lightboxIdx); };
+window.prevImage = function () { _lightboxIdx = (_lightboxIdx - 1 + galleryImages.length) % galleryImages.length; openLightbox(_lightboxIdx); };
+document.addEventListener('keydown', function (e) {
   const lb = document.getElementById('lightbox');
   if (!lb || !lb.classList.contains('active')) return;
   if (e.key === 'Escape') closeLightbox();
@@ -392,7 +386,7 @@ function renderMapsGrid(containerId) {
 }
 
 // --- Settings: apply theme from settings page ---
-window.applySettingsTheme = function(theme) {
+window.applySettingsTheme = function (theme) {
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem('cem_theme', theme);
   updateThemeIcon(theme);
@@ -400,30 +394,30 @@ window.applySettingsTheme = function(theme) {
 };
 
 // --- Navigate to full event page (for admin/teacher) ---
-window.openEvent = function(id) {
+window.openEvent = function (id) {
   window.location.href = 'event.html?id=' + encodeURIComponent(id);
 };
 
 // ===== SHARED EVENT MODAL (Role-aware) - Replaces openEventDetailModal =====
-window.openEventModal = function(id) {
+window.openEventModal = function (id) {
   const ev = getEventById(id);
   if (!ev) { showToast('Event not found', 'error'); return; }
-  
+
   const user = getCurrentUser();
   if (!user) { showToast('Please login', 'error'); return; }
-  
+
   const allUsers = getUsers();
   const teacherEmails = getEventTeachers(ev);
   const teacherDetails = teacherEmails.map(email => {
     const t = allUsers.find(u => u.email === email && u.role === 'teacher');
     return t || { name: email };
   });
-  
+
   const coords = ev.coordinators || [];
   const evStatus = getEventStatus(ev.date);
-  
+
   let actionButtons = '';
-  
+
   // Role-specific actions
   if (user.role === 'admin') {
     actionButtons = `
@@ -453,7 +447,7 @@ window.openEventModal = function(id) {
         </button>
       </div>`;
   }
-  
+
   showModal(ev.title, `
     <div class="mb-12">${getStatusBadge(evStatus)}</div>
     <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px;font-size:.95rem">
@@ -470,7 +464,7 @@ window.openEventModal = function(id) {
       <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
         ${teacherDetails.map((t, i) => `
           <div class="glass-card" style="padding:12px;font-size:.9rem">
-            <div style="font-size:.7rem;font-weight:600;color:var(--accent);">Faculty ${i+1}</div>
+            <div style="font-size:.7rem;font-weight:600;color:var(--accent);">Faculty ${i + 1}</div>
             <div style="font-weight:600">${t.name || '—'}</div>
             <div class="text-muted" style="margin-bottom:2px">${t.phone || '—'}</div>
             <div class="text-muted">${t.department ? t.department : ''}</div>
@@ -484,7 +478,7 @@ window.openEventModal = function(id) {
       <div style="display:flex;flex-direction:column;gap:8px">
         ${coords.map((c, i) => `
           <div class="glass-card" style="padding:12px;font-size:.9rem">
-            <div style="font-size:.7rem;font-weight:600;color:var(--accent);">Coord ${i+1}</div>
+            <div style="font-size:.7rem;font-weight:600;color:var(--accent);">Coord ${i + 1}</div>
             <div style="font-weight:600">${c.name || '—'}</div>
             <div class="text-muted">${c.phone || '—'}</div>
           </div>
