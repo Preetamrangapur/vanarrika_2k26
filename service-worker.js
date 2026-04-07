@@ -1,8 +1,8 @@
 // ============================================================
-// Service Worker — CampusVibe PWA
+// Service Worker — RANGOTSAVA PWA
 // ============================================================
 
-const CACHE_NAME = 'campusvibe-v3-responsive';
+const CACHE_NAME = 'rangotsava-v3-responsive';
 const ASSETS = [
   '/',
   '/index.html',

@@ -1,6 +1,6 @@
 // ============================================================
 // login.js — Login Page Interactivity
-// CampusVibe — College Event Management Platform
+// RANGOTSAVA — College Event Management Platform
 // Handles: validation, floating labels, password toggle,
 //          dark mode, remember me, toasts, loading spinner
 // ============================================================

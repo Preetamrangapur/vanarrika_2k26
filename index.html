@@ -2,34 +2,347 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CampusVibe — Redirecting...</title>
-  <meta name="description" content="CampusVibe — College Event Management Platform">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>RANGOTSAVA 2k26</title>
+  <meta name="description" content="Experience the biggest cultural and technical festival of the year">
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0B0D1A">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
-    body { background: #0B0D1A; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; font-family: 'Inter', sans-serif; color: #F0F0F8; }
-    .loader { text-align: center; }
-    .loader__icon { font-size: 3rem; margin-bottom: 16px; animation: pulse 1.5s infinite; }
-    .loader__text { font-size: .9rem; color: #8B8FA3; }
-    @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+    /* Reset & Base */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #050510;
+      color: #ffffff;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+
+
+    /* Background Setup */
+    #particles-canvas {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 1; pointer-events: none;
+    }
+    .bg-gradient {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 0; pointer-events: none;
+      /* Dark bluish focal point, echoing the deep concert background */
+      background: radial-gradient(circle at 50% 40%, rgba(20, 20, 45, 0.95), #050508 100%);
+    }
+
+    /* Main Hero Content */
+    .hero-wrapper {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      width: 100%;
+      margin: auto;
+    }
+
+    .content-block {
+      max-width: 800px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.1rem;
+    }
+
+    .subtitle {
+      font-size: clamp(1.2rem, 5vw, 1.8rem);
+      font-weight: 800;
+      letter-spacing: 0px;
+    }
+
+    .title {
+      font-size: clamp(2rem, 9vw, 3.5rem);
+      font-weight: 800;
+      margin-bottom: 0.2rem;
+    }
+
+    .tagline {
+      font-size: clamp(1rem, 4vw, 1.3rem);
+      font-weight: 400;
+      line-height: 1.5;
+      max-width: 600px;
+      margin-bottom: 2rem;
+    }
+
+    .event-status {
+      font-size: clamp(1.4rem, 6.5vw, 2.5rem);
+      font-weight: 800;
+      margin: 1rem 0 2rem;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Countdown Timer */
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .time-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      min-width: 100px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    .time-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #ff4757;
+      line-height: 1;
+    }
+    .time-label {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 0.5rem;
+      font-weight: 600;
+    }
+
+    /* Buttons Container */
+    .buttons-row {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .countdown { gap: 0.8rem; }
+      .time-box { min-width: 70px; padding: 1rem; }
+      .time-value { font-size: 1.8rem; }
+      .buttons-row { flex-direction: column; width: 100%; max-width: 300px; margin: 1rem auto; }
+      .buttons-row .btn-cta { width: 100%; margin-top: 0; }
+    }
+
+    /* Primary & Secondary Buttons */
+    .btn-cta {
+      background: #fa4454;
+      color: white;
+      text-decoration: none;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      font-size: clamp(0.95rem, 4vw, 1.1rem);
+      font-weight: 700;
+      box-shadow: 0 4px 15px rgba(250, 68, 84, 0.4);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .btn-cta:hover {
+      background: #ff5e6e;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(250, 68, 84, 0.6);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid #fa4454;
+      box-shadow: none;
+    }
+    .btn-outline:hover {
+      background: rgba(250, 68, 84, 0.1);
+    }
   </style>
 </head>
 <body>
-  <div class="loader">
-    <div class="loader__icon">🎪</div>
-    <div class="loader__text">Redirecting to your dashboard...</div>
+
+  <!-- Background setup -->
+  <div class="bg-gradient"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Hero Content -->
+  <div class="hero-wrapper">
+    <div class="content-block">
+      <h3 class="subtitle">KISHKINDA UNIVERSITY'S</h3>
+      <h1 class="title">RANGOTSAVA 2k26 💖</h1>
+      <p class="tagline">Experience the biggest cultural and technical festival of the year</p>
+      
+      <div id="countdown-wrapper">
+        <div class="countdown" id="countdown">
+          <div class="time-box">
+            <span class="time-value" id="days">00</span>
+            <span class="time-label">Days</span>
+          </div>
+          <div class="time-box">
+            <span class="time-value" id="hours">00</span>
+            <span class="time-label">Hours</span>
+          </div>
+          <div class="time-box">
+            <span class="time-value" id="minutes">00</span>
+            <span class="time-label">Minutes</span>
+          </div>
+          <div class="time-box">
+            <span class="time-value" id="seconds">00</span>
+            <span class="time-label">Seconds</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="buttons-row">
+        <a href="login.html" class="btn-cta" id="btn-primary-cta">Login</a>
+      </div>
+    </div>
   </div>
+
   <script src="js/data.js"></script>
   <script src="js/auth.js"></script>
   <script>
-    // Redirect to the appropriate dashboard based on role
-    const user = getCurrentUser();
-    if (user) {
-      redirectToDashboard(user.role);
-    } else {
-      window.location.href = 'login.html';
+    // --- Setup routing for Authenticated Users ---
+    document.addEventListener("DOMContentLoaded", () => {
+        if (typeof getCurrentUser === 'function') {
+            const user = getCurrentUser();
+            if (user) {
+                // If user is logged in, change CTA href to their dashboard
+                const btnMain = document.getElementById('btn-primary-cta');
+                let link = 'student.html';
+                if (user.role === 'admin') link = 'admin.html';
+                if (user.role === 'teacher') link = 'teacher.html';
+                btnMain.setAttribute('href', link);
+                btnMain.innerText = 'My Dashboard';
+            }
+        }
+    });
+
+    // --- Countdown Logic ---
+    // Count down to April 25, 2026, at 5 PM (17:00).
+    const targetDate = new Date("April 25, 2026 17:00:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference <= 0) {
+        document.getElementById('countdown-wrapper').innerHTML = '<h2 class="event-status">The Event Has Started!</h2>';
+        return;
+      }
+
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+      const daysEl = document.getElementById('days');
+      if (daysEl) {
+        daysEl.innerText = String(days).padStart(2, '0');
+        document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+        document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+        document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+      }
     }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // --- Particle Confetti Effect ---
+    // Modified to look like dynamic falling stage confetti
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let particlesArray = [];
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      initConfetti();
+    });
+
+    class ConfettiParticle {
+      constructor() {
+        this.reset();
+        this.y = Math.random() * canvas.height; // initial random spread across height
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * -100; // start slightly above screen
+        this.sizeX = Math.random() * 8 + 4; // width of confetti
+        this.sizeY = Math.random() * 8 + 4; // height of confetti
+        this.speedY = Math.random() * 3 + 1; // downward velocity
+        this.speedX = (Math.random() - 0.5) * 2; // horizontal drift
+        
+        // Classic confetti party colors
+        const colors = ['#fa4454', '#2ed573', '#1e90ff', '#ffa502', '#ffffff', '#eccc68', '#a29bfe'];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.rotation = Math.random() * 360; // Initial rotation angle
+        this.rotationSpeed = (Math.random() - 0.5) * 6; // Spin speed
+      }
+      update() {
+        this.y += this.speedY;
+        this.x += this.speedX;
+        this.rotation += this.rotationSpeed;
+
+        // Pendulum-like sway effect mimicking air resistance
+        this.x += Math.sin(this.y * 0.02) * 1.5; 
+
+        // Reset once it falls past the bottom margin
+        if (this.y > canvas.height + 20) {
+          this.reset();
+        }
+        // Horizontal screen wrapping
+        if (this.x > canvas.width + 20) this.x = -20;
+        if (this.x < -20) this.x = canvas.width + 20;
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation * Math.PI / 180);
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = 0.75;
+        // Drawing the rectangular piece of falling confetti
+        ctx.fillRect(-this.sizeX / 2, -this.sizeY / 2, this.sizeX, this.sizeY);
+        ctx.restore();
+      }
+    }
+
+    function initConfetti() {
+      particlesArray = [];
+      const numParticles = Math.min(window.innerWidth / 6, 200); // Responsive density calculation
+      for (let i = 0; i < numParticles; i++) {
+        particlesArray.push(new ConfettiParticle());
+      }
+    }
+
+    function animateConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particlesArray.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateConfetti);
+    }
+
+    initConfetti();
+    animateConfetti();
   </script>
 </body>
 </html>

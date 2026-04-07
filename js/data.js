@@ -374,6 +374,25 @@ const DEFAULT_EVENTS = [
     assignedTeachers: ['priya@college.edu'],
     coordinators: [],
     featured: false
+  },
+  {
+    id: 'e28',
+    title: 'E Sports (Free Fire)',
+    description: 'Free Fire is a battle royale game where players compete to be the last one standing. Join the Free Fire competition to showcase your gaming skills and compete against other players.',
+    venue: 'OAT',
+    floor: 'Ground Floor',
+    date: '2026-05-06',
+    time: '01:00 PM',
+    image: 'images/event-freefire.png',
+    speaker: '',
+    speakerImg: '',
+    speakerBio: '',
+    status: 'upcoming',
+    category: 'Competition',
+    assignedTeacher: 'priya@college.edu',
+    assignedTeachers: ['priya@college.edu'],
+    coordinators: [],
+    featured: false
   }
 ];
 
