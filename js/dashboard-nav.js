@@ -147,18 +147,6 @@ function renderNotices(containerId) {
 
 // --- Gallery Image Data ---
 const galleryImages = [
-  { src: 'images/gallery/gallery-1.png' },
-  { src: 'images/gallery/gallery-2.png' },
-  { src: 'images/gallery/gallery-3.png' },
-  { src: 'images/gallery/gallery-4.png' },
-  { src: 'images/gallery/gallery-5.png' },
-  { src: 'images/gallery/gallery-6.png' },
-  { src: 'images/gallery/gallery-7.png' },
-  { src: 'images/gallery/gallery-8.png' },
-  { src: 'images/gallery/gallery-9.png' },
-  { src: 'images/gallery/gallery-10.png' },
-  { src: 'images/gallery/gallery-11.png' },
-  { src: 'images/gallery/gallery-12.png' },
   { src: 'images/gallery/gallery-13.png' },
   { src: 'images/gallery/gallery-14.png' },
   { src: 'images/gallery/gallery-15.png' },

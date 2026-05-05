@@ -1,6 +1,6 @@
 // ============================================================
 // login.js — Login Page Interactivity
-// RANGOTSAVA — College Event Management Platform
+// EvonDrive — College Event Management Platform
 // Handles: validation, floating labels, password toggle,
 //          dark mode, remember me, toasts, loading spinner
 // ============================================================

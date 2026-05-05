@@ -41,7 +41,7 @@
     allUsers.find(u => u.email === email && u.role === 'teacher')
   ).filter(Boolean);
 
-  document.title = `${ev.title} — RANGOTSAVA`;
+  document.title = `${ev.title} — EvonDrive`;
 
   // Build Teacher Information section (supports multiple teachers)
   let teacherInfoHtml = '';

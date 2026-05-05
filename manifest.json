@@ -1,6 +1,6 @@
 {
-  "name": "RANGOTSAVA",
-  "short_name": "RANGOTSAVA",
+  "name": "EvonDrive",
+  "short_name": "EvonDrive",
   "description": "College Event Management Platform",
   "start_url": "/index.html",
   "display": "standalone",

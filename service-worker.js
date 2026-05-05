@@ -1,8 +1,8 @@
 // ============================================================
-// Service Worker — RANGOTSAVA PWA
+// Service Worker — EvonDrive PWA
 // ============================================================
 
-const CACHE_NAME = 'rangotsava-v3-responsive';
+const CACHE_NAME = 'evondrive-v3-responsive';
 const ASSETS = [
   '/',
   '/index.html',
